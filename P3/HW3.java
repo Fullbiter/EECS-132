@@ -60,6 +60,37 @@ public class HW3 {
         return new SparseMatrix();
     }
     
+    public static double determinant(double[][] matrix) {
+        return 0.0;
+    }
+    
+    public static void swapRows(double[][] matrix, int row1, int row2) {
+        try {
+            double[] heldRow = new double[matrix[row1].length];
+            for (int i = 0; i < matrix[row1].length; i++)
+                heldRow[i] = matrix[row1][i];
+            matrix[row1] = matrix[row2];
+            matrix[row2] = heldRow;
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            ; // do nothing
+        }
+    }
+    
+    public static void scaleRows(double[][] matrix, int row, double scale) {
+        try {
+            if (scale == 0)
+                matrix[row] = new double[] {};
+            else {
+                for (int i = 0; i < matrix[row].length; i++)
+                    matrix[row][i] *= scale;
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            ; // do nothing
+        }
+    }
+    
     /***********************************************************************************************************
      *                           Everything below is to be removed before completion                           *
      ***********************************************************************************************************/
