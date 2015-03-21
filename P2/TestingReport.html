@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+		<title>EECS 132: Project 2 Testing Report</title>
+    </head>
+    <body>
+        <h2>EECS 132: Project 2 Testing Report</h2>   
+        <h3>Kevin Nash (kjn33)</h3>
+        <h4>HW2.java</h4>
+		<p><em>&emsp;Important: Refer also to </em><tt>HW2Test</tt><em>, the JUnit testing class associated with </em><tt>HW2</tt></p>
+		<h4>Cases for <tt>everykToTheNthChar</tt>:</h4>
+        <p>
+			<ul>
+				<li>n is less than 2</li>
+				<li>n is greater than or equal to 2</li>
+				<li>s is empty</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> There are two modes of behavior for this method. The first is returning the input String itself and the second is returning only certain characters found in the input String. The behavior is determined by the value of <tt>n</tt>. Additionally, the edge case of operating on an empty String should be handled properly.
+			</ul>
+		</p>
+		<h4>Cases for <tt>containsSubSequence</tt>:</h4>
+        <p>
+			<ul>
+				<li>The sequence is present in the first part of the String</li>
+				<li>The sequence is present in the last part of the String</li>
+				<li>The sequence is present in the middle of the String (i.e. touching neither end)</li>
+				<li>The sequence and the String are equal</li>
+				<li>The sequence does not exist in the String</li>
+				<li>The sequence does not exist in the same order within the String</li>
+				<li>The sequence is longer than the String</li>
+				<li>The String is empty</li>
+				<li>The sequence is empty</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> The location of the sequence (which end it touches, if any) falls under the "first, last, middle" axiom; the search should correctly find the desired sequence regardless of its place within the String. Tests to do with the length of the sequence test potential boundary cases. Empty Strings prove a common edge case, and so both the sequence and the String are tested as empty.
+			</ul>
+		</p>
+		<h4>Cases for <tt>subtract</tt>:</h4>
+        <p>
+			<ul>
+				<li>The beginning of the minuend String should be subtracted</li>
+				<li>The end of the minuend String should be subtracted</li>
+				<li>The middle (i.e. neither end) of the minuend String is subtracted</li>
+				<li>The subtrahend String is not contained in the minuend String</li>
+				<li>The minuend String and the subtrahend String are equal</li>
+				<li>The subtrahend String is longer than the minuend String</li>
+				<li>The minuend String is empty</li>
+				<li>The subtrahend String is empty</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> The location of the subtracted characters falls under the "first, last, middle" axiom; the subtraction should occur regardless of their place in the minuend String. A test of "no operation" should be performed in which no subtraction occurs. Tests to do with the length of either String test potential boundary cases. Empty Strings prove a command edge case, and so both the minuend and subtrahend Strings are tested as empty.
+			</ul>
+		</p>
+		<h4>Cases for <tt>doubleValue</tt>:</h4>
+        <p>
+			<ul>
+				<li>An integer is converted</li>
+				<li>A negative integer is converted</li>
+				<li>A non-integer is converted</li>
+				<li>A negative non-integer is converted</li>
+				<li>The input String has a leading decimal point (e.g. <tt>.123</tt>)</li>
+				<li>The input String has a trailing decimal point (e.g. <tt>123.</tt>)</li>
+				<li>The input String has a leading zero (e.g. <tt>0123</tt>)</li>
+				<li>The input String has a trailing zero (e.g. <tt>123.00</tt>)</li>
+				<li>The input String is empty</li>
+				<li>The input String is improperly formatted (e.g. <tt>1.2.3</tt>)</li>
+				<li>The input String contains illegal characters (e.g. <tt>1.0f</tt>)</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> Testing of this method can be categorized in one of two ways: numerical or formatting. There are four numerical types, identified by the presence or absence of a negative sign and a decimal point. All four should be tested. In the formatting category, there are legal edge cases and illegal ones. Legal cases include unnecessary zeroes as well as absent zeroes on either side of the decimal point. Illegal cases include an excess of otherwise valid characters (i.e. <tt>-</tt> and <tt>.</tt>) as well as altogether invalid characters. Illegal cases should be checked to throw the relevant exception.
+			</ul>
+		</p>
+		<h4>Cases for <tt>everyNthCharOfWord</tt>:</h4>
+        <p>
+			<ul>
+				<li>n is less than or equal to the length of the longest word</li>
+				<li>n is greater than the length of the longest word</li>
+				<li>n is not a positive number</li>
+				<li>The input String is empty</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> The method will return only spaces when n is too great. Otherwise it will return a mixture of spaces and letters. If n is not positive, which doesn't make sense (what is the 0th or -1st letter in a word?), the method should return an empty String. As always, an empty String should be passed as input to test an edge case.
+			</ul>
+		</p>
+		<h4>Cases for <tt>flipWords</tt>:</h4>
+        <p>
+			<ul>
+				<li>A single word is converted</li>
+				<li>Multiple words separated by a whitespace are converted</li>
+				<li>Multiple words separated by non-whitespace are converted</li>
+				<li>A word with leading non-whitespace is converted</li>
+				<li>A word with trailing non-whitespace is converted</li>
+				<li>An empty String is converted</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> Tests follow the "zero, one, many" axiom for input Strings with one word, multiple words, and (as always) an empty String. The method should also be tested to differentiate between whitespace, word characters, and non-word characters. The leading and trailing tests follow the "first, last, middle" axiom.
+			</ul>
+		</p>
+		<h4>Cases for <tt>transpose</tt>:</h4>
+        <p>
+			<ul>
+				<li>A single word is converted</li>
+				<li>Multiple words are converted</li>
+				<li>Multiple words and non-letter sequences are converted</li>
+				<li>Multiple words and consecutive whitespaces are converted</li>
+				<li>An empty String is converted</li>
+			</ul>
+			<ul>
+				<strong>Rationale:</strong> Tests follow the "zero, one, many" axiom for input Strings with one word, multiple words, and (as always) an empty String. The method should also be tested to differentiate between whitespace, word characters, and non-word characters.
+			</ul>
+		</p>
+    </body>
+</html>
