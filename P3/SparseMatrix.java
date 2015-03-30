@@ -15,14 +15,22 @@ public class SparseMatrix {
     /** the index in values of the first element in each row **/
     public int[] rowStarts;
     
-    public SparseMatrix() {}
-    
+    /**
+     * Constructor for SparseMatrix in native form
+     * @param  nonZeroValues    the nonzero entries of this SparseMatrix
+     * @param  columnPositions  the column index of each element of values
+     * @param  rowStarts        the index in values of the first element in each row
+     */
     public SparseMatrix(double[] nonZeroValues, int[] columnPositions, int[] rowStarts) {
         this.nonZeroValues = nonZeroValues;
         this.columnPositions = columnPositions;
         this.rowStarts = rowStarts;
     }
     
+    /**
+     * Constructor for SparseMatrix in two-dimensional array form
+     * @param  matrix  the matrix used to construct a SparseMatrix
+     */
     public SparseMatrix(double[][] matrix) {
         // the number of non-zero entries in matrix
         int nnz = 0;
@@ -59,30 +67,58 @@ public class SparseMatrix {
         }
     }
     
+    /**
+     * Getter method for the non-zero values held by a SparseMatrix
+     * @return  non-zero values
+     */
     public double[] getNonZeroValues() {
         return nonZeroValues;
     }
     
+    /**
+     * Setter method for the non-zero values held by a SparseMatrix
+     * @param  non-zero values
+     */
     public void setNonZeroValues(double[] nonZeroValues) {
         this.nonZeroValues = nonZeroValues;
     }
     
+    /**
+     * Getter method for the column indices of non-zero values held by a SparseMatrix
+     * @return  column indices
+     */
     public int[] getColumnPositions() {
         return columnPositions;
     }
     
+    /**
+     * Setter method for the column indices of non-zero values held by a SparseMatrix
+     * @param  column indices
+     */
     public void setColumnPositions(int[] columnPositions) {
         this.columnPositions = columnPositions;
     }
     
+    /**
+     * Getter method for the values of the first element in each row of a SparseMatrix
+     * @return  the first values in each row
+     */
     public int[] getRowStarts() {
         return rowStarts;
     }
     
+    /**
+     * Setter method for the values of the first element in each row of a SparseMatrix
+     * @param  the first values in each row
+     */
     public void setRowStarts(int[] rowStarts) {
         this.rowStarts = rowStarts;
     }
     
+    /**
+     * Returns a matrix representation of the SparseMatrix with no truncation
+     * @return  Untruncated matrix
+     */
     public double[][] getFullMatrix() {
         // the maximum length of a row
         int maxLength = 0;
