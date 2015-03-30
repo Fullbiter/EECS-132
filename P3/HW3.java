@@ -2,7 +2,7 @@
  * The HW3 class provides static methods for operations on matrices.
  *
  * @author   Kevin Nash (kjn33)
- * @version  2015.3.24
+ * @version  2015.3.29
  */
 public class HW3 {
     
@@ -18,18 +18,16 @@ public class HW3 {
             return matrix;
         
         // create new matrix with one fewer row than the input matrix
-        double[][] newMatrix = new double[matrix.length - 1][matrix[0].length];
+        double[][] newMatrix = new double[matrix.length - 1][0];
         
         // copy matrix values from rows before the input row to the new matrix
         for (int i = 0; i < row; i++) {
-            for (int j = 0; j < matrix[i].length; j++)
-                newMatrix[i][j] = matrix[i][j];
+                newMatrix[i] = matrix[i];
         }
         
         // copy matrix values from rows after the input row to the new matrix
         for (int i = row; i < matrix.length - 1; i++) {
-            for (int j = 0; j < matrix[i].length; j++)
-                newMatrix[i][j] = matrix[i + 1][j];
+                newMatrix[i] = matrix[i + 1];
         }
         
         return newMatrix;
@@ -127,7 +125,6 @@ public class HW3 {
      * @param  scale    number by which to multiply
      */
     public static void addRows(double[][] matrix, int toRow, int fromRow, double scale) {
-        
         // resize toRow if its length is less than that of the incoming row
         if (matrix[fromRow].length > matrix[toRow].length) {
             double[] resizedToRow = new double[matrix[fromRow].length];
@@ -151,9 +148,8 @@ public class HW3 {
             truncationLength++;
         // if there is a truncation to be made
         if (truncationLength > 0) {
-            // 
             double[] resizedToRow = new double[matrix[toRow].length - truncationLength];
-            // 
+            // fill the resized row with corresponding values
             for (int i = 0; i < resizedToRow.length; i++)
                 resizedToRow[i] = matrix[toRow][i];
             matrix[toRow] = resizedToRow;
@@ -164,34 +160,30 @@ public class HW3 {
         // create a shallow copy of matrix
         double[][] workingMatrix = new double[matrix.length][matrix[0].length];
         
-//        try {
-            prevRowLength = matrix[0].length;
-            // copy matrix values from rows before the input row to the new matrix
-            for (int i = 0; i < matrix.length; i++) {
-                if (prevRowLength != matrix[i].length)
-                    throw new NotInvertibleException();
-                for (int j = 0; j < matrix[i].length; j++) {
-                    workingMatrix[i][j] = matrix[i][j];
-                }
-            }
-//        }
-//        catch (ArrayIndexOutOfBoundsException e) {
-//            throw new NotInvertibleException();
-//        }
+        // fill workingMatrix with values of matrix while checking for square-ness
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i].length > matrix.length)
+                throw new NotInvertibleException();
+            for (int j = 0; j < matrix[i].length; j++)
+                workingMatrix[i][j] = matrix[i][j];
+        }
+        return matrix;
     }
 }
 
 class NotInvertibleException extends Exception {
+
+    NotInvertibleException() {}
     
-    NotInvertibleException (String message) {
+    NotInvertibleException(String message) {
         super (message);
     }
-
-    NotInvertibleException (Throwable cause) {
+    
+    NotInvertibleException(Throwable cause) {
         super (cause);
     }
-
-    NotInvertibleException (String message, Throwable cause) {
+    
+    NotInvertibleException(String message, Throwable cause) {
         super (message, cause);
     }
 }
