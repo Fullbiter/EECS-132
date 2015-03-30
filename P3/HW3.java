@@ -2,7 +2,7 @@
  * The HW3 class provides static methods for operations on matrices.
  *
  * @author   Kevin Nash (kjn33)
- * @version  2015.3.29
+ * @version  2015.3.30
  */
 public class HW3 {
     
@@ -22,19 +22,65 @@ public class HW3 {
         
         // copy matrix values from rows before the input row to the new matrix
         for (int i = 0; i < row; i++) {
-                newMatrix[i] = matrix[i];
+            newMatrix[i] = matrix[i];
         }
         
         // copy matrix values from rows after the input row to the new matrix
         for (int i = row; i < matrix.length - 1; i++) {
-                newMatrix[i] = matrix[i + 1];
+            newMatrix[i] = matrix[i + 1];
         }
         
         return newMatrix;
     }
     
+    /**
+     * Returns the input SparseMatrix with the specified row removed
+     * @param  matrix  a SparseMatrix to modify
+     * @param  row     the target row of matrix
+     * @return  A version of the input SparseMatrix with a row removed
+     */
     public static SparseMatrix removeRow(SparseMatrix matrix, int row) {
-        return new SparseMatrix();
+        // the number of non-zero values in the target row
+        int nnzToRemove = matrix.getRowStarts()[row + 1] - matrix.getRowStarts()[row];
+        System.out.println("nnzToRemove = " + nnzToRemove);
+        // the number of non-zero values before the target row
+        int nnzPrev = matrix.getRowStarts()[row];
+        System.out.println("nnzPrev = " + nnzPrev);
+        
+        // updated SparseMatrix parameters
+        double[] newNonZeroValues = new double[matrix.getNonZeroValues().length - nnzToRemove];
+        int[] newColumnPositions = new int[matrix.getColumnPositions().length - nnzToRemove];
+        int[] newRowStarts = new int[matrix.getRowStarts().length - 1];
+        
+        // directly copy old nonZeroValues before the removed values into newNonZeroValues
+        // directly copy old columnPositions before the removed values into newColumnPositions
+        for (int i = 0; i < nnzToRemove - nnzPrev; i++) {
+            System.out.println("i = " + i);
+            newNonZeroValues[i] = matrix.getNonZeroValues()[i];
+            newColumnPositions[i] = matrix.getColumnPositions()[i];
+        }
+        
+        // copy old nonZeroValues minus removed values, starting with the first value after those removed
+        // copy old columnPositions ...
+        for (int i = nnzToRemove - nnzPrev; i < newNonZeroValues.length; i++) {
+            System.out.println("i = " + i);
+            newNonZeroValues[i] = matrix.getNonZeroValues()[i + nnzToRemove];
+            newColumnPositions[i] = matrix.getColumnPositions()[i + nnzToRemove];
+        }
+        
+        // directly copy old rowStarts before row into newRowStarts
+        for (int i = 1; i < row + 1; i++) {
+            System.out.println("i = " + i);
+            newRowStarts[i] = matrix.getRowStarts()[i];
+        }
+        
+        // copy old rowStarts minus removed values into newRowStarts, starting at row
+        for (int i = row + 1; i < newRowStarts.length; i++) {
+            System.out.println("i = " + i);
+            newRowStarts[i] = matrix.getRowStarts()[i + 1] - nnzToRemove;
+        }
+        
+        return new SparseMatrix(newNonZeroValues, newColumnPositions, newRowStarts);
     }
     
     /**
@@ -66,9 +112,9 @@ public class HW3 {
         return newMatrix;
     }
     
-    public static SparseMatrix removeColumn(SparseMatrix matrix, int column) {
-        return new SparseMatrix();
-    }
+//    public static SparseMatrix removeColumn(SparseMatrix matrix, int column) {
+//        return new SparseMatrix();
+//    }
     
     public static double determinant(double[][] matrix) {
         return 0.0;
@@ -172,7 +218,7 @@ public class HW3 {
 }
 
 class NotInvertibleException extends Exception {
-
+    
     NotInvertibleException() {}
     
     NotInvertibleException(String message) {
