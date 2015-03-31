@@ -40,6 +40,10 @@ public class HW3 {
      * @return  A version of the input SparseMatrix with a row removed
      */
     public static SparseMatrix removeRow(SparseMatrix matrix, int row) {
+        // do nothing for an invalid row
+        if (row >= matrix.getNonZeroValues().length / (matrix.getRowStarts().length - 1) || row < 0)
+            return matrix;
+        
         // the number of non-zero values in the target row
         int nnzToRemove = matrix.getRowStarts()[row + 1] - matrix.getRowStarts()[row];
         // the number of non-zero values before the target row
@@ -73,10 +77,8 @@ public class HW3 {
         
         // copy old rowStarts minus removed values into newRowStarts, starting at row
         j = row;
-        for (int i = row + 1; i < matrix.getRowStarts().length; i++) {
-            System.out.println("Copying RS[" + i + "] (" + matrix.getRowStarts()[i] + ")");
+        for (int i = row + 1; i < matrix.getRowStarts().length; i++)
             newRowStarts[j++] = matrix.getRowStarts()[i] - nnzToRemove;
-        }
         
         return new SparseMatrix(newNonZeroValues, newColumnPositions, newRowStarts);
     }
