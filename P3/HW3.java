@@ -91,33 +91,98 @@ public class HW3 {
      */
     public static double[][] removeColumn(double[][] matrix, int column) {
         // do nothing for an invalid column
-        if (column >= matrix[0].length || column < 0)
+        if (column < 0)
             return matrix;
         
-        // create new matrix with one fewer column than the input matrix
-        double[][] newMatrix = new double[matrix.length][matrix[0].length - 1];
+        // replacement row
+        double[] newRow = {};
         
-        // copy matrix values from columns before the input column to the new matrix
         for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < column; j++)
-                newMatrix[i][j] = matrix[i][j];
+            if (matrix[i].length > 0)
+                newRow = new double[matrix[i].length - 1];
+            
+            if (column < matrix[i].length - 1) {
+                // copy values before column into newRow
+                for (int j = 0; j < column; j++) {
+                    newRow[j] = matrix[i][j];
+                }
+                if (column < matrix[i].length - 2) {
+                    // copy values after column into newRow
+                    for (int j = column + 1; j < matrix[i].length; j++)
+                        newRow[j - 1] = matrix[i][j];
+                }
+                
+            }
+            matrix[i] = newRow;
         }
-        
-        // copy matrix values from columns after the input column to the new matrix
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = column; j < matrix[i].length - 1; j++)
-                newMatrix[i][j] = matrix[i][j + 1];
-        }
-        
-        return newMatrix;
+        return matrix;
     }
     
-//    public static SparseMatrix removeColumn(SparseMatrix matrix, int column) {
-//        return new SparseMatrix();
-//    }
+    /**
+     * Returns the input SparseMatrix with the specified column removed
+     * @param  matrix  any SparseMatrix
+     * @param  column  the target column of matrix
+     * @return  A version of the input matrix with a column removed
+     */
+    public static SparseMatrix removeColumn(SparseMatrix matrix, int column) {
+        return new SparseMatrix(new double[][] {{}});
+    }
     
     public static double determinant(double[][] matrix) {
-        return 0.0;
+        // subdeterminant for even indices
+        double evenDeterminant = 0.0;
+        // subdeterminant for odd indices
+        double oddDeterminant = 0.0;
+        // temporary storage for a sum
+        double sum = 0.0;
+        // temporary storage for an index
+        int i = 0;
+        
+        // return zero given no rows
+        if (matrix.length == 0)
+            return 0.0;
+        
+        // return a difference of sums given a single row
+        if (matrix.length == 1) {
+            while (i < matrix[0].length)
+                sum += matrix[0][i] * ((++i % 2 != 0) ? 1 : -1);
+            return sum;
+        }
+        
+        // sum the first row evens
+        sum = 0.0;
+        i = 0;
+        while (i < matrix[0].length) {
+            sum += matrix[0][i];
+            i += 2;
+        }
+        // remove the first row and the first even column of matrix
+        // calculate determinant of result, multiply by sum
+        evenDeterminant = sum * determinant(removeColumn(removeRow(matrix, 0), 0));
+        
+        // sum the first row odds
+        sum = 0.0;
+        i = 1;
+        while (i < matrix[0].length) {
+            sum += matrix[0][i];
+            i += 2;
+        }
+        // remove the first row and the first odd column of matrix
+        // calculate determinant of result, multiply by sum
+        oddDeterminant = sum * determinant(removeColumn(removeRow(matrix, 0), 1));
+        
+        // return the difference of the two subdeterminants
+        return evenDeterminant - oddDeterminant;
+    }
+    
+    /**
+     * Returns the input SparseMatrix with the specified column removed
+     * @param  matrix  any SparseMatrix
+     * @param  column  the target column of matrix
+     * @return  A version of the input matrix with a column removed
+     */
+    public static SparseMatrix determinant(SparseMatrix matrix) {
+        return new SparseMatrix(new double[][] {{}});
     }
     
     /**
@@ -217,18 +282,35 @@ public class HW3 {
     }
 }
 
+/**
+ * A NotInvertibleException is thrown when a matrix cannot be inverted.
+ *
+ * @author   Kevin Nash (kjn33)
+ * @version  2015.3.30
+ */
 class NotInvertibleException extends Exception {
-    
+    /**
+     * Constructor with no parameters
+     */
     NotInvertibleException() {}
     
+    /**
+     * Constructor inherits behavior for messages
+     */
     NotInvertibleException(String message) {
         super (message);
     }
     
+    /**
+     * Constructor inherits behavior for Throwables
+     */
     NotInvertibleException(Throwable cause) {
         super (cause);
     }
     
+    /**
+     * Constructor inherits behavior for messages and Throwables
+     */
     NotInvertibleException(String message, Throwable cause) {
         super (message, cause);
     }
