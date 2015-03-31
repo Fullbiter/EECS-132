@@ -42,10 +42,10 @@ public class HW3 {
     public static SparseMatrix removeRow(SparseMatrix matrix, int row) {
         // the number of non-zero values in the target row
         int nnzToRemove = matrix.getRowStarts()[row + 1] - matrix.getRowStarts()[row];
-        System.out.println("nnzToRemove = " + nnzToRemove);
         // the number of non-zero values before the target row
         int nnzPrev = matrix.getRowStarts()[row];
-        System.out.println("nnzPrev = " + nnzPrev);
+        // temporary index
+        int j = 0;
         
         // updated SparseMatrix parameters
         double[] newNonZeroValues = new double[matrix.getNonZeroValues().length - nnzToRemove];
@@ -54,30 +54,28 @@ public class HW3 {
         
         // directly copy old nonZeroValues before the removed values into newNonZeroValues
         // directly copy old columnPositions before the removed values into newColumnPositions
-        for (int i = 0; i < nnzToRemove - nnzPrev; i++) {
-            System.out.println("i = " + i);
+        for (int i = 0; i < nnzPrev/*matrix.getRowStarts()[row + 1] - 1*/; i++) {
             newNonZeroValues[i] = matrix.getNonZeroValues()[i];
             newColumnPositions[i] = matrix.getColumnPositions()[i];
         }
         
         // copy old nonZeroValues minus removed values, starting with the first value after those removed
         // copy old columnPositions ...
-        for (int i = nnzToRemove - nnzPrev; i < newNonZeroValues.length; i++) {
-            System.out.println("i = " + i);
-            newNonZeroValues[i] = matrix.getNonZeroValues()[i + nnzToRemove];
-            newColumnPositions[i] = matrix.getColumnPositions()[i + nnzToRemove];
+        j = nnzPrev;
+        for (int i = nnzPrev + nnzToRemove; i < matrix.getNonZeroValues().length; i++) {
+            newNonZeroValues[j] = matrix.getNonZeroValues()[i];
+            newColumnPositions[j++] = matrix.getColumnPositions()[i];
         }
         
         // directly copy old rowStarts before row into newRowStarts
-        for (int i = 1; i < row + 1; i++) {
-            System.out.println("i = " + i);
+        for (int i = 0; i < row + 1; i++)
             newRowStarts[i] = matrix.getRowStarts()[i];
-        }
         
         // copy old rowStarts minus removed values into newRowStarts, starting at row
-        for (int i = row + 1; i < newRowStarts.length; i++) {
-            System.out.println("i = " + i);
-            newRowStarts[i] = matrix.getRowStarts()[i + 1] - nnzToRemove;
+        j = row;
+        for (int i = row + 1; i < matrix.getRowStarts().length; i++) {
+            System.out.println("Copying RS[" + i + "] (" + matrix.getRowStarts()[i] + ")");
+            newRowStarts[j++] = matrix.getRowStarts()[i] - nnzToRemove;
         }
         
         return new SparseMatrix(newNonZeroValues, newColumnPositions, newRowStarts);
