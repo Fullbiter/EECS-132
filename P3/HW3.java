@@ -1,3 +1,4 @@
+import java.util.Arrays;
 /**
  * The HW3 class provides static methods for operations on matrices.
  *
@@ -22,12 +23,16 @@ public class HW3 {
         
         // copy matrix values from rows before the input row to the new matrix
         for (int i = 0; i < row; i++) {
-            newMatrix[i] = matrix[i];
+            newMatrix[i] = new double[matrix[i].length];
+            for (int j = 0; j < newMatrix[i].length; j++)
+                newMatrix[i][j] = matrix[i][j];
         }
         
         // copy matrix values from rows after the input row to the new matrix
         for (int i = row; i < matrix.length - 1; i++) {
-            newMatrix[i] = matrix[i + 1];
+            newMatrix[i] = new double[matrix[i + 1].length];
+            for (int j = 0; j < newMatrix[i].length; j++)
+                newMatrix[i][j] = matrix[i + 1][j];
         }
         
         return newMatrix;
@@ -101,12 +106,12 @@ public class HW3 {
             if (matrix[i].length > 0)
                 newRow = new double[matrix[i].length - 1];
             
-            if (column < matrix[i].length - 1) {
+            if (column < matrix[i].length) {
                 // copy values before column into newRow
                 for (int j = 0; j < column; j++) {
                     newRow[j] = matrix[i][j];
                 }
-                if (column < matrix[i].length - 2) {
+                if (column < matrix[i].length - 1) {
                     // copy values after column into newRow
                     for (int j = column + 1; j < matrix[i].length; j++)
                         newRow[j - 1] = matrix[i][j];
@@ -129,6 +134,8 @@ public class HW3 {
     }
     
     public static double determinant(double[][] matrix) {
+        System.out.println("Method Start");
+        System.out.println(Arrays.deepToString(matrix));
         // subdeterminant for even indices
         double evenDeterminant = 0.0;
         // subdeterminant for odd indices
@@ -139,13 +146,16 @@ public class HW3 {
         int i = 0;
         
         // return zero given no rows
-        if (matrix.length == 0)
+        if (matrix.length == 0) {
+            System.out.println("Return 1: " + 0);
             return 0.0;
+        }
         
         // return a difference of sums given a single row
         if (matrix.length == 1) {
             while (i < matrix[0].length)
                 sum += matrix[0][i] * ((++i % 2 != 0) ? 1 : -1);
+            System.out.println("Return 2: " + sum);
             return sum;
         }
         
@@ -156,6 +166,7 @@ public class HW3 {
             sum += matrix[0][i];
             i += 2;
         }
+        System.out.println("even sum = " + sum);
         // remove the first row and the first even column of matrix
         // calculate determinant of result, multiply by sum
         evenDeterminant = sum * determinant(removeColumn(removeRow(matrix, 0), 0));
@@ -167,10 +178,12 @@ public class HW3 {
             sum += matrix[0][i];
             i += 2;
         }
+        System.out.println("odd sum = " + sum);
         // remove the first row and the first odd column of matrix
         // calculate determinant of result, multiply by sum
         oddDeterminant = sum * determinant(removeColumn(removeRow(matrix, 0), 1));
         
+        System.out.println("Return 3: " + (evenDeterminant - oddDeterminant));
         // return the difference of the two subdeterminants
         return evenDeterminant - oddDeterminant;
     }
