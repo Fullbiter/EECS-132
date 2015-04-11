@@ -1,4 +1,3 @@
-import java.util.Arrays;
 /**
  * The HW3 class provides static methods for operations on matrices.
  *
@@ -46,7 +45,7 @@ public class HW3 {
      */
     public static SparseMatrix removeRow(SparseMatrix matrix, int row) {
         // do nothing for an invalid row
-        if (row >= matrix.getNonZeroValues().length / (matrix.getRowStarts().length - 1) || row < 0)
+        if (row > matrix.getNonZeroValues().length / (matrix.getRowStarts().length - 1) || row < 0)
             return matrix;
         
         // the number of non-zero values in the target row
@@ -63,7 +62,7 @@ public class HW3 {
         
         // directly copy old nonZeroValues before the removed values into newNonZeroValues
         // directly copy old columnPositions before the removed values into newColumnPositions
-        for (int i = 0; i < nnzPrev/*matrix.getRowStarts()[row + 1] - 1*/; i++) {
+        for (int i = 0; i < nnzPrev; i++) {
             newNonZeroValues[i] = matrix.getNonZeroValues()[i];
             newColumnPositions[i] = matrix.getColumnPositions()[i];
         }
@@ -106,6 +105,7 @@ public class HW3 {
         
         // iterate over every row in newMatrix
         for (int i = 0; i < newMatrix.length; i++) {
+            
             // the row is long enough to contain column
             if (column < matrix[i].length) {
                 newRow = new double[matrix[i].length - 1];
@@ -135,9 +135,49 @@ public class HW3 {
      * @return  A version of the input matrix with a column removed
      */
     public static SparseMatrix removeColumn(SparseMatrix matrix, int column) {
-        return new SparseMatrix(new double[][] {{}});
+        // the greatest value in columnPositions
+        int maxPosition = 0;
+        for (int position : matrix.getColumnPositions())
+            maxPosition = (maxPosition > position) ? maxPosition : position;
+        // do nothing for an invalid column
+        if(column > maxPosition || column < 0)
+            return matrix;
+        
+        // the number of rows in the matrix
+        int height = matrix.getRowStarts().length - 1;
+        // storage for an index in matrix.nonZeroValues
+        int k = 0;
+        // new matrix to output
+        double[][] newMatrix = new double[height][0]; 
+        for (int i = 1; i < height; i++) {
+            // the number of non-zero values in a row
+            int rowLength = matrix.getRowStarts()[i] - matrix.getRowStarts()[i - 1];
+            // new row to put in newMatrix
+            double[] newRow = new double[rowLength];
+            if (column < rowLength) {
+                // copy values before column into newMatrix;
+                for (int j = 0; j < column; j++)
+                    newRow[j] = matrix.getNonZeroValues()[k++];
+                k++;
+                // copy values after column into newMatrix;
+                for (int j = column; j < rowLength; j++)
+                    newRow[j] = matrix.getNonZeroValues()[k++];
+            }
+            else {
+                // directly copy values into newRow
+                for (int j = 0; j < rowLength; j++)
+                    newRow[j] = matrix.getNonZeroValues()[k++];
+            }
+            newMatrix[i] = newRow;
+        }
+        return new SparseMatrix(newMatrix);
     }
     
+    /**
+     * Calculates the determinant of an input matrix
+     * @param  matrix  any matrix
+     * @return  the determinant of a matrix
+     */
     public static double determinant(double[][] matrix) {
         // subdeterminant for even indices
         double evenDeterminant = 0.0;
@@ -192,8 +232,56 @@ public class HW3 {
      * @param  column  the target column of matrix
      * @return  A version of the input matrix with a column removed
      */
-    public static SparseMatrix determinant(SparseMatrix matrix) {
-        return new SparseMatrix(new double[][] {{}});
+    public static double determinant(SparseMatrix matrix) {
+        // subdeterminant for even indices
+        double evenDeterminant = 0.0;
+        // subdeterminant for odd indices
+        double oddDeterminant = 0.0;
+        // temporary storage for a sum
+        double sum = 0.0;
+        // temporary storage for a row length
+        int rowLength = 0;
+        // temporary storage for an index
+        int i = 0;
+        
+        // return zero given no rows
+        if (matrix.getNonZeroValues().length == 0) {
+            return 0.0;
+        }
+        
+        // return a difference of sums given a single row
+        if (matrix.getRowStarts().length == 2) {
+            while (i < matrix.getNonZeroValues().length)
+                sum += matrix.getNonZeroValues()[i] * ((++i % 2 != 0) ? 1 : -1);
+            return sum;
+        }
+        
+        rowLength = matrix.getRowStarts()[1] - matrix.getRowStarts()[0];
+        
+        // sum the first row evens
+        sum = 0.0;
+        i = 0;
+        while (i < rowLength) {
+            sum += matrix.getNonZeroValues()[i];
+            i += 2;
+        }
+        // remove the first row and the first even column of matrix
+        // calculate determinant of result, multiply by sum
+        evenDeterminant = sum * determinant(removeColumn(removeRow(matrix, 0), 0));
+        
+        // sum the first row odds
+        sum = 0.0;
+        i = 1;
+        while (i < rowLength) {
+            sum += matrix.getNonZeroValues()[i];
+            i += 2;
+        }
+        // remove the first row and the first odd column of matrix
+        // calculate determinant of result, multiply by sum
+        oddDeterminant = sum * determinant(removeColumn(removeRow(matrix, 0), 1));
+        
+        // return the difference of the two subdeterminants
+        return evenDeterminant - oddDeterminant;
     }
     
     /**
@@ -204,7 +292,7 @@ public class HW3 {
      */
     public static void swapRows(double[][] matrix, int row1, int row2) {
         // row1 and row2 exist in matrix
-        if (row1 < matrix.length && row1 > 0 && row2 < matrix.length && row2 > 0) {
+        if (row1 < matrix.length && row1 >= 0 && row2 < matrix.length && row2 >= 0) {
             // temporary 1D array to store the contents of row1
             double[] heldRow = new double[matrix[row1].length];
             
@@ -260,13 +348,13 @@ public class HW3 {
         }
         
         // add each element of fromRow times scale to toRow
-        for (int i = 0; i < matrix[toRow].length; i++)
+        for (int i = 0; i < matrix[fromRow].length; i++)
             matrix[toRow][i] += matrix[fromRow][i] * scale;
         
         // stores the number of consecutive zero values backward from the last index of toRow
         int truncationLength = 0;
         // increments truncationLength accordingly
-        for (int i = matrix[toRow].length - 1; matrix[toRow][i] == 0 && i >= 0; i--)
+        for (int i = matrix[toRow].length - 1; i >= 0 && matrix[toRow][i] == 0; i--)
             truncationLength++;
         // if there is a truncation to be made
         if (truncationLength > 0) {
@@ -278,6 +366,11 @@ public class HW3 {
         }
     }
     
+    /**
+     * Inverts a square matrix
+     * @param  matrix  any square 2D double array
+     * @return  inverse of the input matrix
+     */
     public static double[][] invert(double[][] matrix) throws NotInvertibleException {
         // create a shallow copy of matrix
         double[][] workingMatrix = new double[matrix.length][matrix[0].length];
@@ -289,7 +382,42 @@ public class HW3 {
             for (int j = 0; j < matrix[i].length; j++)
                 workingMatrix[i][j] = matrix[i][j];
         }
-        return matrix;
+        
+        double[][] resultMatrix = new double[matrix.length][0];
+        // create a shallow resultMatrix (diagonal)
+        for (int i = 0; i < workingMatrix.length; i++) {
+            resultMatrix[i] = new double[i + 1];
+            resultMatrix[i][resultMatrix[i].length - 1] = 1;
+        }
+        
+        // ensure the [i][i] indices are non-zero by iterating over every row
+        for (int i = 0; i < workingMatrix.length; i++) {
+            if (workingMatrix[i][i] == 0) {
+                int j = 1 + 1;
+                // find a non-zero value for i
+                while (workingMatrix[j][i] == 0 && j < workingMatrix[i].length)
+                    j++;
+                if (j >= workingMatrix[i].length)
+                    throw new NotInvertibleException();
+                else {
+                    swapRows(workingMatrix, i, j);
+                    swapRows(resultMatrix, i, j);
+                }
+            }
+            // interate over every row before i
+            for (int j = 0; j < i; j++) {
+                addRows(workingMatrix, j, i, -1 * workingMatrix[j][i] / workingMatrix[i][i]);
+                addRows(resultMatrix, j, i, -1 * workingMatrix[j][i] / workingMatrix[i][i]);
+            }
+            // interate over every row after i
+            for (int j = i + 1; j < workingMatrix.length; j++) {
+                addRows(workingMatrix, j, i, -1 * workingMatrix[j][i] / workingMatrix[i][i]);
+                addRows(resultMatrix, j, i, -1 * workingMatrix[j][i] / workingMatrix[i][i]);
+            }
+            scaleRows(workingMatrix, i, 1.0 / workingMatrix[i][i]);
+            scaleRows(resultMatrix, i, 1.0 / workingMatrix[i][i]);
+        }
+        return resultMatrix;
     }
 }
 

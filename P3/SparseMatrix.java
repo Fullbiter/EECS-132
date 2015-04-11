@@ -7,13 +7,13 @@
 public class SparseMatrix {
     
     /** the nonzero entries of this SparseMatrix **/
-    public double[] nonZeroValues;
+    private double[] nonZeroValues;
     
     /** the column index of each element of values **/
-    public int[] columnPositions;
+    private int[] columnPositions;
     
     /** the index in values of the first element in each row **/
-    public int[] rowStarts;
+    private int[] rowStarts;
     
     /**
      * Constructor for SparseMatrix in native form
