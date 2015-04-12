@@ -38,6 +38,7 @@ public class Point {
      */
     public void setX(int x) {
         this.x = x;
+        updateAngle();
     }
     
     /**
@@ -54,6 +55,7 @@ public class Point {
      */
     public void setY(int y) {
         this.y = y;
+        updateAngle();
     }
     
     /**
@@ -80,6 +82,9 @@ public class Point {
      * @param  angle  the angle
      */
     private void updateAngle() {
-        this.angle = Math.acos(x / Math.sqrt(x * x + y * y));
+        if (x != 0 && y != 0)
+            angle = Math.acos(x / Math.sqrt(x * x + y * y));
+        else
+            angle = 0.0;
     }
 }
