@@ -5,6 +5,7 @@
  * @version  2015.4.11
  */
 public class Point {
+    
     /** x coordinate **/    
     private int x = 0;
     /** y coordinate **/
