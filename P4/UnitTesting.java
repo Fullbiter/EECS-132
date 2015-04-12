@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class HW4Test {
+public class UnitTesting {
     
     /**
      * Tests the coordinate operations of the Point class

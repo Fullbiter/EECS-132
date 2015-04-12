@@ -1,5 +1,5 @@
 /**
- * Point objects represent points in 2D space.
+ * Line objects represent line segments in 2D space.
  *
  * @author   Kevin Nash (kjn33)
  * @version  2015.4.11
