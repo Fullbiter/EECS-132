@@ -72,9 +72,28 @@ public class Point {
      * @param  angle  the angle
      */
     public void rotate(double angle) {
-        int xNew = (int)(x * Math.cos(angle) - y * Math.sin(angle) + 0.5);
-        y = (int)(x * Math.sin(angle) + y * Math.cos(angle) + 0.5);
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+        int xNew = (int)(x * cos - y * sin + 0.5);
+        y = (int)(x * sin + y * cos + 0.5);
         x = xNew;
+        updateAngle();
+    }
+    
+    /**
+     * Rotates this point about a given point by the given angle
+     * @param  anchor  the anchor point
+     * @param  angle   the angle
+     */
+    public void rotate(Point anchor, double angle) {
+        // translate anchor point to origin and this point relatively
+        x -= anchor.getX();
+        y -= anchor.getY();
+        // rotate as normal
+        rotate(angle);
+        // reverse the prior translation
+        x -= anchor.getX();
+        y -= anchor.getY();
         updateAngle();
     }
     

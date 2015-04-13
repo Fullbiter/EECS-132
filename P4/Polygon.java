@@ -1,5 +1,6 @@
 /**
- * Polygon can be extended into specific shapes in 2D space.
+ * Polygon represents shapes constructed of Lines.
+ * A single Line is technically a Polygon.
  *
  * @author   Kevin Nash (kjn33)
  * @version  2015.4.12
@@ -38,6 +39,8 @@ public abstract class Polygon {
     
     /**
      * Define a line of the polygon explicitly
+     * @param  i     the index of the line to be stored
+     * @param  line  the line to be stored
      * @exception  ArrayIndexOutOfBoundsException
      */
     protected void defineLine(int i, Line line) throws ArrayIndexOutOfBoundsException {
