@@ -27,7 +27,7 @@ public class FlakeFractal extends Fractal {
         // Tell Fractal to store each subfractal, the consecutive lines between the above Points
         super.defineSubFractal(0, new FlakeFractal(new Line(baseShape.getFirstPoint(), oneThird)));
         super.defineSubFractal(1, new FlakeFractal(new Line(oneThird, peak)));
-        super.defineSubFractal(2, new FlakeFractal(new Line(peak, twoThirds));
+        super.defineSubFractal(2, new FlakeFractal(new Line(peak, twoThirds)));
         super.defineSubFractal(3, new FlakeFractal(new Line(twoThirds, baseShape.getSecondPoint())));
     }
 }
