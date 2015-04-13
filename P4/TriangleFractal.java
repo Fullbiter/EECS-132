@@ -28,8 +28,8 @@ public class TriangleFractal extends Fractal {
         Point centroid = new Point(centroidX, centroidY);
         
         // Tell Fractal to store each subfractal
-        super.defineSubFractal(0, new TriangleFractal(new Triangle(point2, centroid, point1)));
-        super.defineSubFractal(1, new TriangleFractal(new Triangle(point3, centroid, point2)));
-        super.defineSubFractal(2, new TriangleFractal(new Triangle(point1, centroid, point3)));
+        super.setSubFractal(0, new TriangleFractal(new Triangle(point2, centroid, point1)));
+        super.setSubFractal(1, new TriangleFractal(new Triangle(point3, centroid, point2)));
+        super.setSubFractal(2, new TriangleFractal(new Triangle(point1, centroid, point3)));
     }
 }

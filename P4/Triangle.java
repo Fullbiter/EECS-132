@@ -17,9 +17,9 @@ public class Triangle extends Polygon {
     public Triangle(Point point1, Point point2, Point point3) {
         // Tells the Polygon class that we have three edges
         super(3);
-        super.defineLine(0, new Line(point1, point2));
-        super.defineLine(1, new Line(point2, point3));
-        super.defineLine(2, new Line(point3, point1));
+        super.setLine(0, new Line(point1, point2));
+        super.setLine(1, new Line(point2, point3));
+        super.setLine(2, new Line(point3, point1));
     }
     
     /**
@@ -33,8 +33,8 @@ public class Triangle extends Polygon {
         Point point1 = new Point(center.getX() - length / 2, center.getY() - (int)(Math.sqrt(3) * length / 6.0));
         Point point2 = new Point(center.getX(), center.getY() - (int)(Math.sqrt(3) * length / 6.0));
         Point point3 = new Point(center.getX() + length / 2, center.getY() - (int)(Math.sqrt(3) * length / 6.0));
-        super.defineLine(0, new Line(point1, point2));
-        super.defineLine(1, new Line(point2, point3));
-        super.defineLine(2, new Line(point3, point1));
+        super.setLine(0, new Line(point1, point2));
+        super.setLine(1, new Line(point2, point3));
+        super.setLine(2, new Line(point3, point1));
     }
 }

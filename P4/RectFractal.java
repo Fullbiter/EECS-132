@@ -42,14 +42,14 @@ public class RectFractal extends Fractal {
         Point x3y2 = new Point(baseShape.getWidth() - baseShape.getX(), horiz2);
         
         // Tell Fractal to store each subfractal
-        super.defineSubFractal(0, new RectFractal(new Rectangle(x0y0, x1y1)));
-        super.defineSubFractal(1, new RectFractal(new Rectangle(x1y0, x2y1)));
-        super.defineSubFractal(2, new RectFractal(new Rectangle(x2y1, x3y0)));
-        super.defineSubFractal(3, new RectFractal(new Rectangle(x0y1, x1y2)));
-        super.defineSubFractal(4, new RectFractal(new Rectangle(x3y2, x2y1)));
-        super.defineSubFractal(5, new RectFractal(new Rectangle(x0y3, x1y2)));
-        super.defineSubFractal(6, new RectFractal(new Rectangle(x1y2, x2y3)));
-        super.defineSubFractal(7, new RectFractal(new Rectangle(x3y3, x2y2)));
+        super.setSubFractal(0, new RectFractal(new Rectangle(x0y0, x1y1)));
+        super.setSubFractal(1, new RectFractal(new Rectangle(x1y0, x2y1)));
+        super.setSubFractal(2, new RectFractal(new Rectangle(x2y1, x3y0)));
+        super.setSubFractal(3, new RectFractal(new Rectangle(x0y1, x1y2)));
+        super.setSubFractal(4, new RectFractal(new Rectangle(x3y2, x2y1)));
+        super.setSubFractal(5, new RectFractal(new Rectangle(x0y3, x1y2)));
+        super.setSubFractal(6, new RectFractal(new Rectangle(x1y2, x2y3)));
+        super.setSubFractal(7, new RectFractal(new Rectangle(x3y3, x2y2)));
     }
 }
 

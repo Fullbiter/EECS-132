@@ -32,7 +32,7 @@ public class TreeFractal extends Fractal {
         point4.rotate(point1, Math.PI / 3.0);
         
         // Tell Fractal to store each subfractal, the lines that make each branch
-        super.defineSubFractal(0, new TreeFractal(new Line(point2, point3)));
-        super.defineSubFractal(1, new TreeFractal(new Line(point2, point4)));
+        super.setSubFractal(0, new TreeFractal(new Line(point2, point3)));
+        super.setSubFractal(1, new TreeFractal(new Line(point2, point4)));
     }
 }

@@ -38,12 +38,12 @@ public abstract class Polygon {
     }
     
     /**
-     * Define a line of the polygon explicitly
+     * set a line of the polygon explicitly
      * @param  i     the index of the line to be stored
      * @param  line  the line to be stored
      * @exception  ArrayIndexOutOfBoundsException
      */
-    protected void defineLine(int i, Line line) throws ArrayIndexOutOfBoundsException {
+    protected void setLine(int i, Line line) throws ArrayIndexOutOfBoundsException {
         lines[i] = line;
     }
 }

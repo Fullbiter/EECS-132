@@ -36,10 +36,10 @@ public class Rectangle extends Polygon {
         width = Math.abs(deltaX);
         height = Math.abs(deltaY);
         
-        super.defineLine(0, new Line(x, y, x, y + height - 1));
-        super.defineLine(1, new Line(x, y + height - 1, x + width - 1, y + height - 1));
-        super.defineLine(2, new Line(x + width - 1, y + height - 1, x + width - 1, y));
-        super.defineLine(3, new Line(x + width - 1, y, x, y));
+        super.setLine(0, new Line(x, y, x, y + height - 1));
+        super.setLine(1, new Line(x, y + height - 1, x + width - 1, y + height - 1));
+        super.setLine(2, new Line(x + width - 1, y + height - 1, x + width - 1, y));
+        super.setLine(3, new Line(x + width - 1, y, x, y));
     }
     
     /**
@@ -54,10 +54,10 @@ public class Rectangle extends Polygon {
         y = center.getY() - length / 2;
         width = length;
         height = length;
-        super.defineLine(0, new Line(x, y, x, y + height - 1));
-        super.defineLine(1, new Line(x, y + height - 1, x + width - 1, y + height - 1));
-        super.defineLine(2, new Line(x + width - 1, y + height - 1, x + width - 1, y));
-        super.defineLine(3, new Line(x + width - 1, y, x, y));
+        super.setLine(0, new Line(x, y, x, y + height - 1));
+        super.setLine(1, new Line(x, y + height - 1, x + width - 1, y + height - 1));
+        super.setLine(2, new Line(x + width - 1, y + height - 1, x + width - 1, y));
+        super.setLine(3, new Line(x + width - 1, y, x, y));
     }
     
     /**
