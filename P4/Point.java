@@ -99,7 +99,6 @@ public class Point {
     
     /**
      * Updates the angle to reflect the current coordinates
-     * @param  angle  the angle
      */
     private void updateAngle() {
         if (x != 0 && y != 0)

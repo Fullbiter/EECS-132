@@ -24,16 +24,10 @@ public class FlakeFractal extends Fractal {
         // The top point of an equilateral triangle formed with oneThird and twoThirds
         Point peak = Geometry.findPeak(oneThird, twoThirds);
         
-        // The consecutive lines between the above Points
-        Line line1 = new Line(baseShape.getFirstPoint(), oneThird);
-        Line line2 = new Line(oneThird, peak);
-        Line line3 = new Line(peak, twoThirds);
-        Line line4 = new Line(twoThirds, baseShape.getSecondPoint());
-        
-        // Tell Fractal to store each subfractal
-        super.defineSubFractal(0, new FlakeFractal(line1));
-        super.defineSubFractal(1, new FlakeFractal(line2));
-        super.defineSubFractal(2, new FlakeFractal(line3));
-        super.defineSubFractal(3, new FlakeFractal(line4));
+        // Tell Fractal to store each subfractal, the consecutive lines between the above Points
+        super.defineSubFractal(0, new FlakeFractal(new Line(baseShape.getFirstPoint(), oneThird)));
+        super.defineSubFractal(1, new FlakeFractal(new Line(oneThird, peak)));
+        super.defineSubFractal(2, new FlakeFractal(new Line(peak, twoThirds));
+        super.defineSubFractal(3, new FlakeFractal(new Line(twoThirds, baseShape.getSecondPoint())));
     }
 }
