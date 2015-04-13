@@ -23,7 +23,7 @@ public class Line extends Polygon {
         super(1);
         this.point1 = point1;
         this.point2 = point2;
-        super.defineLine(0, new Line(point1, point2));
+        super.defineLine(0, this);
     }
     
     /**
@@ -38,7 +38,7 @@ public class Line extends Polygon {
         super(1);
         this.point1 = new Point(x1, y1);
         this.point2 = new Point(x2, y2);
-        super.defineLine(0, new Line(point1, point2));
+        super.defineLine(0, this);
     }
     
     /**

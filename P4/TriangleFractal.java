@@ -27,14 +27,9 @@ public class TriangleFractal extends Fractal {
         int centroidY = (int)((point1.getY() + point2.getY() + point3.getY()) / 3.0 + 0.5);
         Point centroid = new Point(centroidX, centroidY);
         
-        // Create three subtriangles
-        Triangle triangle1 = new Triangle(point2, centroid, point1);
-        Triangle triangle2 = new Triangle(point3, centroid, point2);
-        Triangle triangle3 = new Triangle(point1, centroid, point3);
-        
         // Tell Fractal to store each subfractal
-        super.defineSubFractal(0, new TriangleFractal(triangle1));
-        super.defineSubFractal(1, new TriangleFractal(triangle2));
-        super.defineSubFractal(2, new TriangleFractal(triangle3));
+        super.defineSubFractal(0, new TriangleFractal(new Triangle(point2, centroid, point1)));
+        super.defineSubFractal(1, new TriangleFractal(new Triangle(point3, centroid, point2)));
+        super.defineSubFractal(2, new TriangleFractal(new Triangle(point1, centroid, point3)));
     }
 }

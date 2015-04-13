@@ -61,6 +61,38 @@ public class Rectangle extends Polygon {
     }
     
     /**
+     * Returns the x coordinate of the rectangle's origin
+     * @return  x coordinate
+     */
+    public int getX() {
+        return x;
+    }
+    
+    /**
+     * Returns the y coordinate of the rectangle's origin
+     * @return  y coordinate
+     */
+    public int getY() {
+        return y;
+    }
+    
+    /**
+     * Returns the width of this Rectangle
+     * @return  width
+     */
+    public int getWidth() {
+        return width;
+    }
+    
+    /**
+     * Returns the height of this Rectangle
+     * @return  height
+     */
+    public int getHeight() {
+        return height;
+    }
+    
+    /**
      * Draws the rectangle associated with the Rectangle object
      * @param  graphics  the graphics context
      */
