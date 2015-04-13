@@ -12,8 +12,6 @@ public class Line extends Polygon {
     private Point point1;
     /** the second point of the line segment **/
     private Point point2;
-    /** the angle between this line and the x axis **/
-    private double angle = 0.0;
     
     /**
      * Constructs a line segment between the input points
@@ -26,7 +24,6 @@ public class Line extends Polygon {
         this.point1 = point1;
         this.point2 = point2;
         super.defineLine(0, new Line(point1, point2));
-        updateAngle();
     }
     
     /**
@@ -42,7 +39,6 @@ public class Line extends Polygon {
         this.point1 = new Point(x1, y1);
         this.point2 = new Point(x2, y2);
         super.defineLine(0, new Line(point1, point2));
-        updateAngle();
     }
     
     /**
@@ -59,7 +55,6 @@ public class Line extends Polygon {
      */
     public void setFirstPoint(Point point) {
         this.point1 = point;
-        updateAngle();
     }
     
     /**
@@ -76,21 +71,5 @@ public class Line extends Polygon {
      */
     public void setSecondPoint(Point point) {
         this.point2 = point;
-        updateAngle();
-    }
-    
-    /**
-     * Returns the angle between this line and the x axis
-     * @return  the angle
-     */
-    public double getAngle() {
-        return angle;
-    }
-    
-    /**
-     * Updates the angle to reflect the current coordinates
-     */
-    private void updateAngle() {
-        angle = Math.atan((point2.getY() - point1.getY()) / (point2.getX() - point1.getX()));
     }
 }
