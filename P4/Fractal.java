@@ -20,7 +20,7 @@ public abstract class Fractal {
      */
     public Fractal(Polygon baseShape, int subFractalCount) {
         this.baseShape = baseShape;
-        subFractals = new Fractal[subFractalCount];
+        this.subFractals = new Fractal[subFractalCount];
     }
     
     /**
