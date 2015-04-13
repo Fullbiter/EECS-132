@@ -14,7 +14,7 @@ public class CarpetPicture extends Picture {
      */
     public CarpetPicture(Rectangle baseShape) {
         // Tell Picture which starting shape to use and the associated number of edges
-        super(baseShape, baseShape.getLines().length);
+        super(baseShape);
         RectFractal baseFractal = new RectFractal(baseShape);
         for (int i = 0; i < baseFractal.subFractals().length; i++)
             super.setFractal(i, baseFractal.subFractals()[i]);

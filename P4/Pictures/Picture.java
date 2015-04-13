@@ -19,9 +19,9 @@ public abstract class Picture {
      * @param  baseShape         starting shape (Polygon)
      * @param  baseFractalCount  the number of base fractals
      */
-    public Picture(Polygon baseShape, int baseFractalCount) {
+    public Picture(Polygon baseShape) {
         this.baseShape = baseShape;
-        this.baseFractals = new Fractal[baseFractalCount];
+        this.baseFractals = new Fractal[baseShape.getLines().length];
     }
     
     /**

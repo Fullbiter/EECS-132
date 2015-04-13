@@ -13,9 +13,9 @@ public class SnowflakePicture extends Picture {
      * @param  baseShape  the Polygon that the SnowflakePicture is based upon
      */
     public SnowflakePicture(Polygon baseShape) {
-        // Tell Picture which starting shape to use and the associated number of edges
-        super(baseShape, baseShape.getLines().length);
+        // Tell Picture which starting shape to use
+        super(baseShape);
         for (int i = 0; i < baseShape.getLines().length; i++)
-            super.setFractal(i, new FlakeFractal(baseShape.getLines()[i]));
+            super.setFractal(i, new FlakeFractal(baseShape.getLines()[i]), );
     }
 }

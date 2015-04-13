@@ -57,8 +57,8 @@ public abstract class Fractal {
     
     /**
      * set a subfractal of the Fractal explicitly
-     * @param  i     the index of the line to be stored
-     * @param  line  the line to be stored
+     * @param  i           the index of the line to be stored
+     * @param  subFractal  the subfractal to be stored
      * @exception  ArrayIndexOutOfBoundsException
      */
     protected void setSubFractal(int i, Fractal subFractal) throws ArrayIndexOutOfBoundsException {

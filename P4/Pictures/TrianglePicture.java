@@ -14,7 +14,7 @@ public class TrianglePicture extends Picture {
      */
     public TrianglePicture(Triangle baseShape) {
         // Tell Picture which starting shape to use and the associated number of edges
-        super(baseShape, baseShape.getLines().length);
+        super(baseShape);
         TriangleFractal baseFractal = new TriangleFractal(baseShape);
         for (int i = 0; i < baseFractal.subFractals().length; i++)
             super.setFractal(i, baseFractal.subFractals()[i]);
