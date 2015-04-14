@@ -72,4 +72,13 @@ public class Line extends Polygon {
     public void setSecondPoint(Point point) {
         this.point2 = point;
     }
+    
+    /**
+     * Draws the line associated with the Line object
+     * @param  graphics  the graphics context
+     */
+    @Override
+    public void draw(Graphics graphics) {
+        graphics.drawLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());;
+    }
 }
