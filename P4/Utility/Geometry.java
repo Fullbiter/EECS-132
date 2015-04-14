@@ -28,8 +28,8 @@ public final class Geometry {
      * @param  point2  the second point
      */
     public static Point findPeak(Point point1, Point point2) {
-        int x3 = (int)(0.5 * (point2.getX() + point1.getX() + Math.sqrt(3) * (point2.getY() - point1.getY())) + 0.5);
-        int y3 = (int)(0.5 * (point2.getY() + point1.getY() - Math.sqrt(3) * (point2.getX() - point1.getX())) + 0.5);
+        int x3 = (int)(0.5 * (point2.getX() + point1.getX() - Math.sqrt(3) * (point2.getY() - point1.getY())) + 0.5);
+        int y3 = (int)(0.5 * (point2.getY() + point1.getY() + Math.sqrt(3) * (point2.getX() - point1.getX())) + 0.5);
         return new Point(x3, y3);
     }
 }

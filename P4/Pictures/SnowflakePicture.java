@@ -16,6 +16,6 @@ public class SnowflakePicture extends Picture {
         // Tell Picture which starting shape to use
         super(baseShape);
         for (int i = 0; i < baseShape.getLines().length; i++)
-            super.setFractal(i, new FlakeFractal(baseShape.getLines()[i], 3));
+            super.setFractal(i, new FlakeFractal(baseShape.getLines()[i], 5));
     }
 }

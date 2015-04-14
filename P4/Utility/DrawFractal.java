@@ -1,5 +1,5 @@
 /**
- * Creates a canvas upon which to draw fractals.
+ * Creates a canvas upon which to draw fractals and a menu.
  *
  * @author   Kevin Nash (kjn33)
  * @version  2015.4.13
@@ -150,7 +150,8 @@ public class DrawFractal implements ActionListener {
             drawFractal(new SnowflakePicture(new Rectangle(center, length)), 3);
         // Draw tree picture
         else if ("tree".equals(e.getActionCommand()))
-            drawFractal(new TreePicture(new Line(new Point(center.getX(),(int)(center.getY() * (3.0 / 2.0) + 0.5)), center)), 5);
+            drawFractal(new TreePicture(new Line(new Point(center.getX(),
+                                                           (int)(center.getY() * (3.0 / 2.0) + 0.5)), center)), 5);
         // Draw triangle picture
         else if ("triangle".equals(e.getActionCommand()))
             drawFractal(new TrianglePicture(new Triangle(center, length)), 3);
