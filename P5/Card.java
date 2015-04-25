@@ -173,6 +173,38 @@ public class Card {
     }
     
     /**
+     * Returns the Face of the Card
+     * @return Card Face
+     */
+    public Face getFace() {
+        return this.face;
+    }
+    
+    /**
+     * Returns the Suit of the Card
+     * @return Card Suit
+     */
+    public Suit getSuit() {
+        return this.suit;
+    }
+    
+    /**
+     * Returns the flip status of the Card
+     * @return Card flip status
+     */
+    public boolean getIsFaceUp() {
+        return this.isFaceUp;
+    }
+    
+    /**
+     * Sets the flip status of the Card
+     * @param  b  Card flip status
+     */
+    public void setIsFaceUp(boolean b) {
+        this.isFaceUp = b;
+    }
+    
+    /**
      * Returns the symbolic representation of the Card
      * @return Card symbol
      */
