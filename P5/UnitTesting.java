@@ -98,12 +98,16 @@ public class UnitTesting {
      */
     @Test
     public void cardGetterSetter() {
-        Card card = new Card("ace", "spades");
-        card.getFace();
-        card.getSuit();
-        card.setIsFaceUp(true);
-        assertTrue("Getter incorrectly states that the card is face down", card.getIsFaceUp());
-        card.setIsFaceUp(false);
-        assertFalse("Getter incorrectly states that the card is face up", card.getIsFaceUp());
+        Card card1 = new Card("ace", "spades");
+        Card card2 = new Card("ace", "spades");
+        Card card3 = new Card("two", "hearts");
+        assertTrue("Error in method getFace", card1.getFace().equals(card2.getFace()));
+        assertFalse("Error in method getFace", card1.getFace().equals(card3.getFace()));
+        assertTrue("Error in method getSuit", card1.getSuit().equals(card2.getSuit()));
+        assertFalse("Error in method getSuit", card1.getSuit().equals(card3.getSuit()));
+        card1.setIsFaceUp(true);
+        assertTrue("Getter incorrectly states that the card is face down", card1.getIsFaceUp());
+        card1.setIsFaceUp(false);
+        assertFalse("Getter incorrectly states that the card is face up", card1.getIsFaceUp());
     }
 }

@@ -6,28 +6,28 @@
  */
 public class Card {
     
-    /** Whether the card is face up or face down **/
+    /** Whether this card is face up or face down **/
     private boolean isFaceUp = true;
     
-    /** The face value of the card **/
+    /** The face value of this card **/
     private Face face;
     
-    /** The suit of the card **/
+    /** The suit of this card **/
     private Suit suit;
     
-    /** enum for the possible face values of the card **/
-    private enum Face {
+    /** enum for the possible face values of this card **/
+    public enum Face {
         ACE("Ace"), TWO("Two"), THREE("Three"), FOUR("Four"), FIVE("Five"), SIX("Six"), SEVEN("Seven"),
         EIGHT("Eight"), NINE("Nine"), TEN("Ten"), JACK("Jack"), QUEEN("Queen"), KING("King");
         
-        /** the name of the Face **/
+        /** the name of this Face **/
         private String name;
-        /** the symbol of the Face **/
+        /** the symbol of this Face **/
         private String symbol;
         
         /**
          * Constructs a Face
-         * @param  name  the name of the face value of the card
+         * @param  name  the name of the face value of this card
          */
         private Face(String name) {
             this.name = name;
@@ -63,7 +63,7 @@ public class Card {
         
         /**
          * Returns the Face bearing the given name
-         * @param  name  the name of the Face
+         * @param  name  the name of this Face
          * @return  Face of name
          */        
         public static Face getFaceByName(String name) throws IllegalArgumentException {
@@ -76,7 +76,7 @@ public class Card {
         }
         
         /**
-         * Returns the symbolic representation of the Face
+         * Returns the symbolic representation of this Face
          * @return Face symbol
          */
         @Override
@@ -85,20 +85,20 @@ public class Card {
         }
     }
     
-    /** enum for the possible suits of the card **/
-    private enum Suit {
+    /** enum for the possible suits of this card **/
+    public enum Suit {
         SPADES("Spades"), HEARTS("Hearts"), DIAMONDS("Diamonds"), CLUBS("Clubs");
         
-        /** the name of the Suit **/
+        /** the name of this Suit **/
         private String name;
-        /** the symbol of the Suit **/
+        /** the symbol of this Suit **/
         private String symbol;
-        /** the color of the Suit **/
+        /** the color of this Suit **/
         private String color;
         
         /**
-         * Constructs a Face
-         * @param  name  the name of the suit of the card
+         * Constructs a Suit
+         * @param  name  the name of the suit of this card
          */
         private Suit(String name) {
             this.name = name;
@@ -123,7 +123,7 @@ public class Card {
         }
         
         /**
-         * Returns the color of the Suit
+         * Returns the color of this Suit
          * @return  Suit color
          */
         public String getColor() {
@@ -146,7 +146,7 @@ public class Card {
         }
         
         /**
-         * Returns the symbolic representation of the Suit
+         * Returns the symbolic representation of this Suit
          * @return Suit symbol
          */
         @Override
@@ -157,8 +157,8 @@ public class Card {
     
     /**
      * Constructs a Card
-     * @param  face  the face value of the card
-     * @param  suit  the suit of the card
+     * @param  face  the face value of this card
+     * @param  suit  the suit of this card
      */
     public Card(String face, String suit) {
         this(face, suit, true);
@@ -166,9 +166,9 @@ public class Card {
     
     /**
      * Constructs a Card
-     * @param  face      the face value of the card
-     * @param  suit      the suit of the card
-     * @param  isFaceUp  whether the card is face up
+     * @param  face      the face value of this card
+     * @param  suit      the suit of this card
+     * @param  isFaceUp  whether this card is face up
      */
     public Card(String face, String suit, Boolean isFaceUp) {
         this.face = Face.getFaceByName(face);
@@ -177,7 +177,7 @@ public class Card {
     }
     
     /**
-     * Returns the Face of the Card
+     * Returns the Face of this Card
      * @return Card Face
      */
     public Face getFace() {
@@ -185,7 +185,7 @@ public class Card {
     }
     
     /**
-     * Returns the Suit of the Card
+     * Returns the Suit of this Card
      * @return Card Suit
      */
     public Suit getSuit() {
@@ -193,7 +193,7 @@ public class Card {
     }
     
     /**
-     * Returns the flip status of the Card
+     * Returns the flip status of this Card
      * @return Card flip status
      */
     public boolean getIsFaceUp() {
@@ -201,7 +201,7 @@ public class Card {
     }
     
     /**
-     * Sets the flip status of the Card
+     * Sets the flip status of this Card
      * @param  b  Card flip status
      */
     public void setIsFaceUp(boolean b) {
@@ -209,7 +209,7 @@ public class Card {
     }
     
     /**
-     * Returns the symbolic representation of the Card
+     * Returns the symbolic representation of this Card
      * @return Card symbol
      */
     @Override
