@@ -6,6 +6,8 @@
  */
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class UnitTesting {
@@ -88,7 +90,20 @@ public class UnitTesting {
                 expectedStrings[index++] = expectedFace + expectedSuit;
             }
         }
-        assertArrayEquals("One or more cards is displayed improperly",
-                          expectedStrings, testStrings);
+        assertArrayEquals("One or more cards are displayed improperly", expectedStrings, testStrings);
+    }
+    
+    /**
+     * Tests the getter/setter methods of Card
+     */
+    @Test
+    public void cardGetterSetter() {
+        Card card = new Card("ace", "spades");
+        card.getFace();
+        card.getSuit();
+        card.setIsFaceUp(true);
+        assertTrue("Getter incorrectly states that the card is face down", card.getIsFaceUp());
+        card.setIsFaceUp(false);
+        assertFalse("Getter incorrectly states that the card is face up", card.getIsFaceUp());
     }
 }

@@ -25,6 +25,10 @@ public class Card {
         /** the symbol of the Face **/
         private String symbol;
         
+        /**
+         * Constructs a Face
+         * @param  name  the name of the face value of the card
+         */
         private Face(String name) {
             this.name = name;
             switch (name.toLowerCase()) {
@@ -93,8 +97,8 @@ public class Card {
         private String color;
         
         /**
-         * Constructs a Suit
-         * @param  name  Suit name
+         * Constructs a Face
+         * @param  name  the name of the suit of the card
          */
         private Suit(String name) {
             this.name = name;
