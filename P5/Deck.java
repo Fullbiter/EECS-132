@@ -4,31 +4,109 @@
  * @author   Kevin Nash (kjn33)
  * @version  2015.4.25
  */
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+
 public class Deck {
     
-    /** The face values contained in this Deck **/
-    private Face[] faces;
+    /** The face values represented by the cards in this Deck **/
+    private Card.Face[] faces;
     
-    /** The suits contained in this Deck **/
-    private Suit[] suits;
+    /** The suits represented by the cards in this Deck **/
+    private Card.Suit[] suits;
+    
+    /** The number of unique suits represented by the cards in this Deck **/
+    private int uniqueSuitCount = 0;
+    
+    /** The Cards contained in this Deck **/
+    private ArrayList<Card> cards = new ArrayList<Card>(52);
     
     /**
      * Constructs a typical Deck
      */
     public Deck() {
-        this(Face.ACE, Face.KING, Suit.SPADES, Suit.HEARTS, Suit.DIAMONDS, Suit.CLUBS);
+        this(Card.Face.ACE, Card.Face.KING, Card.Suit.SPADES, Card.Suit.HEARTS, Card.Suit.DIAMONDS, Card.Suit.CLUBS);
     }
     
     /**
      * Constructs a custom Deck
      * @param  minFace  the minimum face value
      * @param  maxFace  the maximum face value
-     * @param  suits    whether the card is face up
+     * @param  suits    the possible Suits for each Card
      */
-    public Deck(Face minFace, Face maxFace, Suit... suits) {
-        this.faces = new Face[maxFace.ordinal() - minFace.ordinal() + 1];
+    public Deck(Card.Face minFace, Card.Face maxFace, Card.Suit... suits) {
+        this.faces = new Card.Face[maxFace.ordinal() - minFace.ordinal() + 1];
+        Card.Face[] allFaces = Card.Face.values();
         for (int i = 0; i < this.faces.length; i++)
-            this.faces[i] = minFace.values()[i];
+            this.faces[i] = allFaces[i + minFace.ordinal()];
         this.suits = suits;
+        // copy suits data into a HashSet to remove duplicate suits, measure new size
+        List<Card.Suit> auxList = Arrays.asList(suits);
+        HashSet<Card.Suit> auxSet = new HashSet<Card.Suit>(auxList);
+        uniqueSuitCount = auxSet.size();
+        // build the deck
+        build();
+    }
+    
+    /**
+     * Returns the number of unique Suits in this Deck
+     * @return  number of unique suits
+     */
+    public int getNumberSuits() {
+        return this.uniqueSuitCount;
+    }
+    
+    /**
+     * Returns the minimum face value used in this deck
+     * @return  minimum face value
+     */
+    public Card.Face getMinFace() {
+        return this.faces[0];
+    }
+    
+    /**
+     * Returns the maximum face value used in this deck
+     * @return  maximum face value
+     */
+    public Card.Face getMaxFace() {
+        return this.faces[faces.length - 1];
+    }
+    
+    /**
+     * Shuffles this Deck
+     */
+    public void shuffle() {
+        Collections.shuffle(cards, new Random(11777L));
+    }
+    
+    /**
+     * Returns a String representation of this Deck
+     * @return  String version of Deck
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        // Interate over each card
+        for (int i = 0; i < cards.size() - 1; i++) {
+            sb.append(cards.get(i).toString());
+            sb.append(((i + 1) % uniqueSuitCount == 0) ? "\n" : "  ");
+        }
+        sb.append(cards.get(cards.size() - 1).toString());
+        return sb.toString();
+    }
+    
+    /**
+     * Builds this Deck by adding each Card
+     */
+    private void build() {
+        // Add to the deck one of every face/suit combination
+        for (Card.Face face : faces) {
+            for (Card.Suit suit : suits)
+                cards.add(new Card(face, suit)); // O(1) amortized
+        }
     }
 }

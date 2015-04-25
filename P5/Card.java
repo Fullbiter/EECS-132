@@ -15,6 +15,89 @@ public class Card {
     /** The suit of this card **/
     private Suit suit;
     
+    /**
+     * Constructs a Card given a literal Face and Suit
+     * @param  face  the face value of this card
+     * @param  suit  the suit of this card
+     */
+    public Card(Face face, Suit suit) {
+        this(face, suit, true);
+    }
+    
+    /**
+     * Constructs a Card given a literal Face and Suit and specifies flip status
+     * @param  face      the face value of this card
+     * @param  suit      the suit of this card
+     * @param  isFaceUp  whether this card is face up
+     */
+    public Card(Face face, Suit suit, Boolean isFaceUp) {
+        this.face = face;
+        this.suit = suit;
+        this.isFaceUp = isFaceUp;
+    }
+    
+    /**
+     * Constructs a Card given names of a Face and Suit
+     * @param  face  the face value of this card
+     * @param  suit  the suit of this card
+     */
+    public Card(String face, String suit) {
+        this(face, suit, true);
+    }
+    
+    /**
+     * Constructs a Card given names of a Face and Suit and specifies flip status
+     * @param  face      the face value of this card
+     * @param  suit      the suit of this card
+     * @param  isFaceUp  whether this card is face up
+     */
+    public Card(String face, String suit, Boolean isFaceUp) {
+        this.face = Face.getFaceByName(face);
+        this.suit = Suit.getSuitByName(suit);
+        this.isFaceUp = isFaceUp;
+    }
+    
+    /**
+     * Returns the Face of this Card
+     * @return Card Face
+     */
+    public Face getFace() {
+        return this.face;
+    }
+    
+    /**
+     * Returns the Suit of this Card
+     * @return Card Suit
+     */
+    public Suit getSuit() {
+        return this.suit;
+    }
+    
+    /**
+     * Returns the flip status of this Card
+     * @return Card flip status
+     */
+    public boolean getIsFaceUp() {
+        return this.isFaceUp;
+    }
+    
+    /**
+     * Sets the flip status of this Card
+     * @param  b  Card flip status
+     */
+    public void setIsFaceUp(boolean b) {
+        this.isFaceUp = b;
+    }
+    
+    /**
+     * Returns the symbolic representation of this Card
+     * @return Card symbol
+     */
+    @Override
+    public String toString() {
+        return this.face.toString() + this.suit.toString();
+    }
+    
     /** enum for the possible face values of this card **/
     public enum Face {
         ACE("Ace"), TWO("Two"), THREE("Three"), FOUR("Four"), FIVE("Five"), SIX("Six"), SEVEN("Seven"),
@@ -104,19 +187,23 @@ public class Card {
             this.name = name;
             switch (name.toLowerCase()) {
                 case "spades":
-                    this.symbol = "\u2660";
+//                    this.symbol = "\u2660";
+                    this.symbol = "S";
                     this.color = "black";
                     break;
                 case "hearts":
-                    this.symbol = "\u2665";
+//                    this.symbol = "\u2665";
+                    this.symbol = "H";
                     this.color = "red";
                     break;
                 case "diamonds":
-                    this.symbol = "\u2666";
+//                    this.symbol = "\u2666";
+                    this.symbol = "D";
                     this.color = "red";
                     break;
                 case "clubs":
-                    this.symbol = "\u2663";
+//                    this.symbol = "\u2663";
+                    this.symbol = "C";
                     this.color = "black";
                     break;
             }
@@ -153,67 +240,5 @@ public class Card {
         public String toString() {
             return this.symbol;
         }
-    }
-    
-    /**
-     * Constructs a Card
-     * @param  face  the face value of this card
-     * @param  suit  the suit of this card
-     */
-    public Card(String face, String suit) {
-        this(face, suit, true);
-    }
-    
-    /**
-     * Constructs a Card
-     * @param  face      the face value of this card
-     * @param  suit      the suit of this card
-     * @param  isFaceUp  whether this card is face up
-     */
-    public Card(String face, String suit, Boolean isFaceUp) {
-        this.face = Face.getFaceByName(face);
-        this.suit = Suit.getSuitByName(suit);
-        this.isFaceUp = isFaceUp;
-    }
-    
-    /**
-     * Returns the Face of this Card
-     * @return Card Face
-     */
-    public Face getFace() {
-        return this.face;
-    }
-    
-    /**
-     * Returns the Suit of this Card
-     * @return Card Suit
-     */
-    public Suit getSuit() {
-        return this.suit;
-    }
-    
-    /**
-     * Returns the flip status of this Card
-     * @return Card flip status
-     */
-    public boolean getIsFaceUp() {
-        return this.isFaceUp;
-    }
-    
-    /**
-     * Sets the flip status of this Card
-     * @param  b  Card flip status
-     */
-    public void setIsFaceUp(boolean b) {
-        this.isFaceUp = b;
-    }
-    
-    /**
-     * Returns the symbolic representation of this Card
-     * @return Card symbol
-     */
-    @Override
-    public String toString() {
-        return this.face.toString() + this.suit.toString();
     }
 }
