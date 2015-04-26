@@ -95,7 +95,9 @@ public class Card {
      */
     @Override
     public String toString() {
-        return this.face.toString() + this.suit.toString();
+        if (isFaceUp)
+            return this.face.toString() + this.suit.toString();
+        return "XX";
     }
     
     /** enum for the possible face values of this card **/

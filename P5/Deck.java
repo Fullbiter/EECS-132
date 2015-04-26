@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class Deck {
+public class Deck extends java.util.ArrayList<Card> {
     
     /** The face values represented by the cards in this Deck **/
     private Card.Face[] faces;
@@ -43,13 +43,19 @@ public class Deck {
         Card.Face[] allFaces = Card.Face.values();
         for (int i = 0; i < this.faces.length; i++)
             this.faces[i] = allFaces[i + minFace.ordinal()];
+        
         this.suits = suits;
+        
         // copy suits data into a HashSet to remove duplicate suits, measure new size
         List<Card.Suit> auxList = Arrays.asList(suits);
         HashSet<Card.Suit> auxSet = new HashSet<Card.Suit>(auxList);
         uniqueSuitCount = auxSet.size();
-        // build the deck
-        build();
+        
+        // add to the deck one of every face/suit combination
+        for (Card.Face face : faces) {
+            for (Card.Suit suit : suits)
+                cards.add(new Card(face, suit));
+        }
     }
     
     /**
@@ -84,6 +90,16 @@ public class Deck {
     }
     
     /**
+     * Returns the top Card on the deck
+     * @return  Card
+     */
+    public Card drawCard() {
+        Card drawnCard = cards.get(cards.size() - 1);
+        cards.remove(cards.size() - 1);
+        return drawnCard;
+    }
+    
+    /**
      * Returns a String representation of this Deck
      * @return  String version of Deck
      */
@@ -100,13 +116,22 @@ public class Deck {
     }
     
     /**
-     * Builds this Deck by adding each Card
+     * Flips Cards so that none are face up
      */
-    private void build() {
-        // Add to the deck one of every face/suit combination
-        for (Card.Face face : faces) {
-            for (Card.Suit suit : suits)
-                cards.add(new Card(face, suit)); // O(1) amortized
+    public void hideCards() {
+        // Iterate over each Card
+        for (Card card : cards) {
+            card.setIsFaceUp(false);
+        }
+    }
+    
+    /**
+     * Flips Cards so that all are face up
+     */
+    public void showCards() {
+        // Iterate over each Card
+        for (Card card : cards) {
+            card.setIsFaceUp(true);
         }
     }
 }

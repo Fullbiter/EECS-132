@@ -21,6 +21,8 @@ public class UnitTesting {
         Card.Face[] allFaces = Card.Face.values();
         Card.Suit[] allSuits = Card.Suit.values();
         String[] testStrings = new String[allFaces.length * allSuits.length];
+        
+        // Cards face up
         String[] expectedStrings = {"AS", "AH", "AD", "AC", "2S", "2H", "2D", "2C", "3S", "3H", "3D", "3C", "4S", "4H",
                                     "4D", "4C", "5S", "5H", "5D", "5C", "6S", "6H", "6D", "6C", "7S", "7H", "7D", "7C",
                                     "8S", "8H", "8D", "8C", "9S", "9H", "9D", "9C", "10S", "10H", "10D", "10C", "JS",
@@ -30,7 +32,19 @@ public class UnitTesting {
             for (Card.Suit suit : allSuits)
                 testStrings[index++] = new Card(face, suit).toString();
         }
-        assertArrayEquals("One or more cards are displayed improperly", expectedStrings, testStrings);
+        assertArrayEquals("One or more face up cards are displayed improperly", expectedStrings, testStrings);
+        
+        // Cards face down
+        expectedStrings = new String[]{"XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX",
+                                       "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX",
+                                       "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX",
+                                       "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX"};
+        index = 0;
+        for (Card.Face face : allFaces) {
+            for (Card.Suit suit : allSuits)
+                testStrings[index++] = new Card(face, suit, false).toString();
+        }
+        assertArrayEquals("One or more face down cards are displayed improperly", expectedStrings, testStrings);
     }
     
     /**
