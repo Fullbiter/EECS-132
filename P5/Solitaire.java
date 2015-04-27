@@ -13,13 +13,13 @@ public class Solitaire {
     private Deck stock;
     
     /** The tableau **/
-    public Tableau tableau = new Tableau();
+    private Tableau tableau = new Tableau();
     
     /** The active Piles **/
-    private ArrayList<Pile> piles;
+    public ArrayList<Pile> piles;
     
     /** The foundation **/
-    private ArrayList<Foundation> foundation;
+    public ArrayList<FoundationPile> foundation;
     
     /**
      * Constructs a regular Solitaire game
@@ -35,7 +35,7 @@ public class Solitaire {
      */
     public Solitaire(Deck deck, int activePileCount) {
         this.piles = new ArrayList<Pile>(activePileCount);
-        this.foundation = new ArrayList<Foundation>(deck.getNumberSuits());
+        this.foundation = new ArrayList<FoundationPile>(deck.getNumberSuits());
         this.stock = deck;
         // ensure the stock is shuffled
         stock.shuffle();
@@ -43,7 +43,7 @@ public class Solitaire {
         stock.hideCards();
         // add empty Foundations to foundation
         for (int i = 0; i < deck.getNumberSuits(); i++) {
-            Foundation newPile = new Foundation(stock.getUniqueSuits()[i]);
+            FoundationPile newPile = new FoundationPile(stock.getUniqueSuits()[i]);
             foundation.add(newPile);
         }
         // add empty Piles to piles
@@ -97,20 +97,34 @@ public class Solitaire {
     /**
      * Moves the top card of a given Pile to the foundation
      */
-    public void movePileToFoundation() {
-        // iterate over each Card in the tableau
-//        for (Card card : tableau) {
-//            card.setIsFaceUp(false);
-//            stock.add(card);
-//        }
-//        tableau.clear();
+    public void movePileToFoundation(Pile pile) {
+        if (pile.size() == 0)
+            throw new IllegalArgumentException("The input Pile is empty so no Cards can be moved.");
+        boolean movedCard = false;
+        for (int i = 0; i < foundation.size() && !movedCard; i++) {
+            // the target Card matches the current FoundationPile
+            if (pile.getLast().getSuit() == foundation.get(i).getSuit()) {
+                // the FoundationPile is empty and the target Card matches the minimum face value OR
+                // it's not empty and the face value of the target Card is one greater than the top FoundationPile Card
+                if ((foundation.get(i).size() == 0 && pile.getLast().getFace() == stock.getMinFace())
+                        || (foundation.get(i).size() > 0 && pile.getLast().getFace().ordinal()
+                                == foundation.get(i).getLast().getFace().ordinal() + 1)) {
+                    foundation.get(i).add(pile.getLast());
+                    pile.removeLast();
+                    pile.getLast().setIsFaceUp(true);
+                    movedCard = true;
+                }
+            }
+        }
+        if (!movedCard)
+            throw new IllegalArgumentException("Value of the target Card is not valid for its FoundationPile,\nor Suit"                                                   + " of the target Card does not match that of any FoundationPile.");
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("\n");
         // represent the foundation piles
-        for (Foundation pile : foundation) {
+        for (FoundationPile pile : foundation) {
             sb.append(pile.getSuit().toString() + ": ");
             for (Card card : pile)
                 sb.append(card.toString() + "  ");
