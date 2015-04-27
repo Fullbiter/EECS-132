@@ -2,16 +2,15 @@
  * Deck objects represent a deck of playing cards.
  *
  * @author   Kevin Nash (kjn33)
- * @version  2015.4.25
+ * @version  2015.4.26
  */
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import java.util.TreeSet;
 
-public class Deck extends java.util.ArrayList<Card> {
+public class Deck extends ArrayList<Card> {
     
     /** The face values represented by the cards in this Deck **/
     private Card.Face[] faces;
@@ -19,11 +18,11 @@ public class Deck extends java.util.ArrayList<Card> {
     /** The suits represented by the cards in this Deck **/
     private Card.Suit[] suits;
     
-    /** The number of unique suits represented by the cards in this Deck **/
-    private int uniqueSuitCount = 0;
+    /** The unique suits represented by the cards in this Deck **/
+    private Card.Suit[] uniqueSuits;
     
     /** The Cards contained in this Deck **/
-    private ArrayList<Card> cards = new ArrayList<Card>(52);
+//    private ArrayList<Card> cards = new ArrayList<Card>(52);
     
     /**
      * Constructs a typical Deck
@@ -39,22 +38,27 @@ public class Deck extends java.util.ArrayList<Card> {
      * @param  suits    the possible Suits for each Card
      */
     public Deck(Card.Face minFace, Card.Face maxFace, Card.Suit... suits) {
+        // define the face values to be used
         this.faces = new Card.Face[maxFace.ordinal() - minFace.ordinal() + 1];
         Card.Face[] allFaces = Card.Face.values();
         for (int i = 0; i < this.faces.length; i++)
             this.faces[i] = allFaces[i + minFace.ordinal()];
         
+        // define the suits to be used
         this.suits = suits;
         
         // copy suits data into a HashSet to remove duplicate suits, measure new size
         List<Card.Suit> auxList = Arrays.asList(suits);
-        HashSet<Card.Suit> auxSet = new HashSet<Card.Suit>(auxList);
-        uniqueSuitCount = auxSet.size();
+        TreeSet<Card.Suit> auxSet = new TreeSet<Card.Suit>(auxList);
+        uniqueSuits = new Card.Suit[auxSet.size()];
+        int auxIndex = 0;
+        for (Card.Suit suit : auxSet)
+            uniqueSuits[auxIndex++] = suit;
         
         // add to the deck one of every face/suit combination
         for (Card.Face face : faces) {
             for (Card.Suit suit : suits)
-                cards.add(new Card(face, suit));
+                this.add(new Card(face, suit));
         }
     }
     
@@ -63,7 +67,15 @@ public class Deck extends java.util.ArrayList<Card> {
      * @return  number of unique suits
      */
     public int getNumberSuits() {
-        return this.uniqueSuitCount;
+        return uniqueSuits.length;
+    }
+    
+    /**
+     * Returns the Suits in this Deck
+     * @return  suits
+     */
+    public Card.Suit[] getUniqueSuits() {
+        return uniqueSuits;
     }
     
     /**
@@ -86,7 +98,7 @@ public class Deck extends java.util.ArrayList<Card> {
      * Shuffles this Deck
      */
     public void shuffle() {
-        Collections.shuffle(cards, new Random(11777L));
+        Collections.shuffle(this);
     }
     
     /**
@@ -94,8 +106,8 @@ public class Deck extends java.util.ArrayList<Card> {
      * @return  Card
      */
     public Card drawCard() {
-        Card drawnCard = cards.get(cards.size() - 1);
-        cards.remove(cards.size() - 1);
+        Card drawnCard = this.get(this.size() - 1);
+        this.remove(this.size() - 1);
         return drawnCard;
     }
     
@@ -107,11 +119,11 @@ public class Deck extends java.util.ArrayList<Card> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         // Interate over each card
-        for (int i = 0; i < cards.size() - 1; i++) {
-            sb.append(cards.get(i).toString());
-            sb.append(((i + 1) % uniqueSuitCount == 0) ? "\n" : "  ");
+        for (int i = 0; i < this.size() - 1; i++) {
+            sb.append(this.get(i).toString());
+            sb.append(((i + 1) % uniqueSuits.length == 0) ? "\n" : "  ");
         }
-        sb.append(cards.get(cards.size() - 1).toString());
+        sb.append(this.get(this.size() - 1).toString());
         return sb.toString();
     }
     
@@ -120,7 +132,7 @@ public class Deck extends java.util.ArrayList<Card> {
      */
     public void hideCards() {
         // Iterate over each Card
-        for (Card card : cards) {
+        for (Card card : this) {
             card.setIsFaceUp(false);
         }
     }
@@ -130,7 +142,7 @@ public class Deck extends java.util.ArrayList<Card> {
      */
     public void showCards() {
         // Iterate over each Card
-        for (Card card : cards) {
+        for (Card card : this) {
             card.setIsFaceUp(true);
         }
     }
