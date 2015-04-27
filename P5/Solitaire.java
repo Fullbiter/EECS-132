@@ -13,7 +13,7 @@ public class Solitaire {
     private Deck stock;
     
     /** The tableau **/
-    private Tableau tableau = new Tableau();
+    public Tableau tableau = new Tableau();
     
     /** The active Piles **/
     public ArrayList<Pile> piles;
@@ -101,7 +101,7 @@ public class Solitaire {
         if (pile.size() == 0)
             throw new IllegalArgumentException("The input Pile is empty so no Cards can be moved.");
         boolean movedCard = false;
-        for (int i = 0; i < foundation.size() && !movedCard; i++) {
+        for (int i = 0; !movedCard && i < foundation.size(); i++) {
             // the target Card matches the current FoundationPile
             if (pile.getLast().getSuit() == foundation.get(i).getSuit()) {
                 // the FoundationPile is empty and the target Card matches the minimum face value OR
@@ -111,7 +111,8 @@ public class Solitaire {
                                 == foundation.get(i).getLast().getFace().ordinal() + 1)) {
                     foundation.get(i).add(pile.getLast());
                     pile.removeLast();
-                    pile.getLast().setIsFaceUp(true);
+                    if (pile.size() > 0)
+                        pile.getLast().setIsFaceUp(true);
                     movedCard = true;
                 }
             }
