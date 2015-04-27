@@ -88,7 +88,7 @@ public class Solitaire {
     public void moveTableauToStock() {
         // iterate over each Card in the tableau
         for (Card card : tableau) {
-//            card.setIsFaceUp(false);
+            card.setIsFaceUp(false);
             stock.insertCard(card);
         }
         tableau.clear();
@@ -117,7 +117,25 @@ public class Solitaire {
             }
         }
         if (!movedCard)
-            throw new IllegalArgumentException("Value of the target Card is not valid for its FoundationPile,\nor Suit"                                                   + " of the target Card does not match that of any FoundationPile.");
+            throw new IllegalArgumentException("Value of the target Card is not valid for its FoundationPile,\nor Suit"
+                                                   + " of the target Card does not match that of any FoundationPile.");
+    }
+    
+    /**
+     * Moves the top card of a given Pile to the foundation
+     */
+    public void moveTableauToActive(Pile pile) {
+        if (tableau.size() == 0)
+            throw new IllegalArgumentException("The tableau is empty so no Cards can be moved.");
+        boolean movedCard = false;
+        // if the target Card color and the last card of pile color differ
+        if (!tableau.getLast().getSuit().getColor().equals(pile.getLast().getSuit().getColor())) {
+                pile.add(tableau.getLast());
+                tableau.removeLast();
+                movedCard = true;
+        }
+        if (!movedCard)
+            throw new IllegalArgumentException("Color of the target Card matches its destination color.");
     }
     
     @Override
