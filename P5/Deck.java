@@ -113,7 +113,7 @@ public class Deck extends ArrayList<Card> {
     
     /**
      * Places the input Card at the bottom of the deck
-     * @return  Card
+     * @param  Card
      */
     public void insertCard(Card card) {
         this.add(0, card);        
