@@ -13,7 +13,7 @@ public class Solitaire {
     private Deck stock;
     
     /** The tableau **/
-    private Tableau tableau = new Tableau();
+    public Tableau tableau = new Tableau();
     
     /** The active Piles **/
     private ArrayList<Pile> piles;
@@ -22,7 +22,7 @@ public class Solitaire {
     private ArrayList<Foundation> foundation;
     
     /**
-     * Constructs a custom Solitaire game
+     * Constructs a regular Solitaire game
      */
     public Solitaire() {
         this(new Deck(), 7);
@@ -68,18 +68,48 @@ public class Solitaire {
     }
     
     /**
-     * Moves three cards (or fewer if there are fewer in the stock) to the tableau
+     * Moves three Cards (or fewer if there are fewer in the stock) to the tableau
      */
     public void moveStockToTableau() {
-        for (int i = 0; i < 3 && stock.size() > 0; i++) {
-            tableau.add(stock.drawCard());
-            tableau.getLast().setIsFaceUp(true);
+        // don't attempt anything if the stock is empty
+        if (stock.size() > 0) {
+            for (Card card : tableau)
+                card.setIsFaceUp(false);
+            for (int i = 0; i < 3 && stock.size() > 0; i++) {
+                tableau.add(stock.drawCard());
+                tableau.getLast().setIsFaceUp(true);
+            }
         }
+    }
+    
+    /**
+     * Moves all tableau Cards to the stock
+     */
+    public void moveTableauToStock() {
+        // iterate over each Card in the tableau
+        for (Card card : tableau) {
+//            card.setIsFaceUp(false);
+            stock.insertCard(card);
+        }
+        tableau.clear();
+    }
+    
+    /**
+     * Moves the top card of a given Pile to the foundation
+     */
+    public void movePileToFoundation() {
+        // iterate over each Card in the tableau
+//        for (Card card : tableau) {
+//            card.setIsFaceUp(false);
+//            stock.add(card);
+//        }
+//        tableau.clear();
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("\n");
+        // represent the foundation piles
         for (Foundation pile : foundation) {
             sb.append(pile.getSuit().toString() + ": ");
             for (Card card : pile)
@@ -87,6 +117,7 @@ public class Solitaire {
             sb.append("\n");
         }
         sb.append("\n");
+        // represent the active piles
         int pileLabel = piles.size();
         for (Pile pile : piles) {
             sb.append(pileLabel-- + ": ");
@@ -94,9 +125,11 @@ public class Solitaire {
                 sb.append(card.toString() + "  ");
             sb.append("\n");
         }
+        // represent the stock
         sb.append("\nStock: ");
         for (Card card : stock)
             sb.append(card.toString() + "  ");
+        // represent the tableau
         sb.append("\nTableau: ");
         for (Card card : tableau)
             sb.append(card.toString() + "  ");

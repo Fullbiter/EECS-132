@@ -116,6 +116,7 @@ public class Card {
          */
         private Face(String name) {
             this.name = name;
+            // convert the name to a symbol
             switch (name.toLowerCase()) {
                 case "ace":   this.symbol = "A";
                     break;
@@ -187,6 +188,8 @@ public class Card {
          */
         private Suit(String name) {
             this.name = name;
+            // convert the name to a symbol
+            // NOTE: if your IDE font does not support the Unicode below, use the commented lines instead
             switch (name.toLowerCase()) {
                 case "spades":
                     this.symbol = "\u2660";
