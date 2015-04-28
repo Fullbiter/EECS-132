@@ -14,7 +14,7 @@ public class Solitaire {
     private Deck stock;
     
     /** The tableau **/
-    public Tableau tableau = new Tableau();
+    public Pile tableau = new Pile();
     
     /** The active Piles **/
     public ArrayList<Pile> piles;
@@ -143,7 +143,7 @@ public class Solitaire {
     }
     
     /**
-     * Moves the top card of an input Pile to another input Pile
+     * Moves the face up cards of an input Pile to another input Pile
      */
     public void moveActiveToActive(Pile pile1, Pile pile2) {
         if (pile1.size() == 0)
@@ -178,10 +178,14 @@ public class Solitaire {
                                                    + "color of the top moved Card matches its destination color.");
     }
     
+    /**
+     * Returns a String representation of the Solitaire game
+     * @return  game String
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("\n");
-        // represent the foundation piles
+        // iterate over the foundation piles
         for (FoundationPile pile : foundation) {
             sb.append(pile.getSuit().toString() + ": ");
             for (Card card : pile)
@@ -189,20 +193,20 @@ public class Solitaire {
             sb.append("\n");
         }
         sb.append("\n");
-        // represent the active piles
         int pileLabel = piles.size();
+        // iterate over the active piles
         for (Pile pile : piles) {
             sb.append(pileLabel-- + ": ");
             for (Card card : pile)
                 sb.append(card.toString() + "  ");
             sb.append("\n");
         }
-        // represent the stock
         sb.append("\nStock: ");
+        // iterate over the stock
         for (Card card : stock)
             sb.append(card.toString() + "  ");
-        // represent the tableau
         sb.append("\nTableau: ");
+        // iterate over the tableau
         for (Card card : tableau)
             sb.append(card.toString() + "  ");
         sb.append("\n");
