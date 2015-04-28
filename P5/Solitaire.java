@@ -6,6 +6,7 @@
  */
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 public class Solitaire {
     
@@ -118,25 +119,63 @@ public class Solitaire {
             }
         }
         if (!movedCard)
-            throw new IllegalArgumentException("Value of the target Card is not valid for its FoundationPile,\nor Suit"
-                                                   + " of the target Card does not match that of any FoundationPile.");
+            throw new IllegalArgumentException("Value of the source Card is not valid for its FoundationPile,\nor Suit"
+                                                   + " of the source Card does not match that of any FoundationPile.");
     }
     
     /**
-     * Moves the top card of a given Pile to the foundation
+     * Moves the top card of the tableau to an input Pile
      */
     public void moveTableauToActive(Pile pile) {
         if (tableau.size() == 0)
             throw new IllegalArgumentException("The tableau is empty so no Cards can be moved.");
         boolean movedCard = false;
         // if the target Card color and the last card of pile color differ
-        if (!tableau.getLast().getSuit().getColor().equals(pile.getLast().getSuit().getColor())) {
+        if (pile.size() == 0 || (!tableau.getLast().getSuit().getColor().equals(pile.getLast().getSuit().getColor())
+                                     && tableau.getLast().getFace().ordinal() == pile.getLast().getFace().ordinal() - 1)) {
                 pile.add(tableau.getLast());
                 tableau.removeLast();
                 movedCard = true;
         }
         if (!movedCard)
-            throw new IllegalArgumentException("Color of the target Card matches its destination color.");
+            throw new IllegalArgumentException("Value of the source Card is not valid for its destination Pile,\nor "
+                                                   + "color of the source Card matches its destination color.");
+    }
+    
+    /**
+     * Moves the top card of an input Pile to another input Pile
+     */
+    public void moveActiveToActive(Pile pile1, Pile pile2) {
+        if (pile1.size() == 0)
+            throw new IllegalArgumentException("The source Pile is empty so no Cards can be moved.");
+        boolean movedCard = false;
+        ListIterator<Card> itr = pile1.listIterator(0);
+        Card card = itr.next();
+        // iterate over all cards until a face up card is found
+        for (; itr.hasNext() && !card.getIsFaceUp(); card = itr.next());
+        // IF the destination Pile is empty AND the top source Card is the maximum possible value OR
+        // IF the top Card color and the last card of pile color differ AND the top source card is a value one greater
+        if (pile2.size() == 0 && card.getFace() == stock.getMaxFace()
+                || (!card.getSuit().getColor().equals(pile2.getLast().getSuit().getColor())
+                        && card.getFace().ordinal() == pile2.getLast().getFace().ordinal() - 1)) {
+            movedCard = true;
+            // iterate over all face up cards
+            pile2.add(card);
+            int moves = 1;
+            while (itr.hasNext()) {
+                card = itr.next();
+                pile2.add(card);
+                moves++;
+            }
+            // call removeLast a number of times equal to the number of moves
+            for (int i = 0; i < moves; i++)
+                pile1.removeLast();
+            if (pile1.size() > 0)
+                pile1.getLast().setIsFaceUp(true);
+        }
+        if (!movedCard)
+            throw new IllegalArgumentException("Value of the top moved Card is not valid for its destination Pile,\nor "
+                                                   + "color of the top moved Card matches its destination color.");
     }
     
     @Override
