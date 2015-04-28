@@ -7,6 +7,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 public class Solitaire {
     
@@ -14,13 +15,13 @@ public class Solitaire {
     private Deck stock;
     
     /** The tableau **/
-    public Pile tableau = new Pile();
+    private Pile tableau = new Pile();
     
     /** The active Piles **/
-    public ArrayList<Pile> piles;
+    private ArrayList<Pile> piles;
     
     /** The foundation **/
-    public ArrayList<FoundationPile> foundation;
+    private ArrayList<FoundationPile> foundation;
     
     /**
      * Constructs a regular Solitaire game
@@ -53,6 +54,59 @@ public class Solitaire {
             piles.add(newPile);
         }
         initializeGame();
+    }
+    
+    /**
+     * Main method, sample args: java Solitaire 7 Ace King Spades Hearts Diamonds Clubs
+     */
+    public static void main(String[] args) {
+        Solitaire game;
+        if (args.length == 0)
+            game = new Solitaire();
+        else {
+            int pileCount = Integer.valueOf(args[2]);
+            Card.Face min = Card.Face.getFaceByName(args[3]);
+            Card.Face max = Card.Face.getFaceByName(args[4]);
+            Card.Suit[] suits = new Card.Suit[args.length - 5];
+            // iterate over the suit arguments
+            for (int i = 5; i < args.length; i++)
+                suits[i - 5] = Card.Suit.getSuitByName(args[i]);
+            Deck deck = new Deck(min, max, suits);
+            game = new Solitaire(deck, pileCount);
+        }
+        game.playGame();
+    }
+    
+    /**
+     * Plays the game!
+     */
+    public void playGame() {
+        Scanner scan = new Scanner(System.in);
+        String input = new String();
+        // run until a quit command is entered
+        while (!(input.charAt(0) == 'q')) {
+            System.out.print(this.toString());
+            input = scan.nextLine();
+            input = input.toLowerCase();
+            // stock to tableau
+            if (input.equals("s t"))
+                moveStockToTableau();
+            else if (input.charAt(0) == 't' && input.length() > 2) {
+                if (input.charAt(2) == 's')
+                    moveTableauToStock();
+                else if (input.charAt(2) == 'f')
+                    movePileToFoundation(tableau);
+                else
+                    moveTableauToActive(piles.get(Character.getNumericValue(input.charAt(2))));
+            }
+            else if (input.charAt(0) != 'q' && input.length() > 2) {
+                if (input.charAt(2) == 'f')
+                    movePileToFoundation(piles.get(Character.getNumericValue(input.charAt(0))));
+                else
+                    moveActiveToActive(piles.get(Character.getNumericValue(input.charAt(0))),
+                                       piles.get(Character.getNumericValue(input.charAt(2))));
+            }
+        }
     }
     
     /**

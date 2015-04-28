@@ -192,23 +192,23 @@ public class Card {
             // NOTE: if your IDE font does not support the Unicode below, use the commented lines instead
             switch (name.toLowerCase()) {
                 case "spades":
-                    this.symbol = "\u2660";
-//                    this.symbol = "S";
+//                    this.symbol = "\u2660";
+                    this.symbol = "S";
                     this.color = "black";
                     break;
                 case "hearts":
-                    this.symbol = "\u2764";
-//                    this.symbol = "H";
+//                    this.symbol = "\u2764";
+                    this.symbol = "H";
                     this.color = "red";
                     break;
                 case "diamonds":
-                    this.symbol = "\u2666";
-//                    this.symbol = "D";
+//                    this.symbol = "\u2666";
+                    this.symbol = "D";
                     this.color = "red";
                     break;
                 case "clubs":
-                    this.symbol = "\u2663";
-//                    this.symbol = "C";
+//                    this.symbol = "\u2663";
+                    this.symbol = "C";
                     this.color = "black";
                     break;
             }
