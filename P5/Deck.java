@@ -21,9 +21,6 @@ public class Deck extends ArrayList<Card> {
     /** The unique suits represented by the cards in this Deck **/
     private Card.Suit[] uniqueSuits;
     
-    /** The Cards contained in this Deck **/
-//    private ArrayList<Card> cards = new ArrayList<Card>(52);
-    
     /**
      * Constructs a typical Deck
      */
@@ -52,6 +49,7 @@ public class Deck extends ArrayList<Card> {
         TreeSet<Card.Suit> auxSet = new TreeSet<Card.Suit>(auxList);
         uniqueSuits = new Card.Suit[auxSet.size()];
         int auxIndex = 0;
+        // add all suits in auxSet to uniqueSuits
         for (Card.Suit suit : auxSet)
             uniqueSuits[auxIndex++] = suit;
         

@@ -5,5 +5,4 @@
  * @version  2015.4.26
  */
 
-public class Pile extends java.util.LinkedList<Card> {
-}
+public class Pile extends java.util.LinkedList<Card> {}

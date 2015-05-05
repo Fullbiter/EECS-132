@@ -9,10 +9,18 @@ public class FoundationPile extends Pile {
     /** Suit of the FoundationPile **/
     Card.Suit suit;
     
+    /**
+     * Constructs a FoundationPile
+     * @param  suit of the FoundationPile
+     */
     public FoundationPile(Card.Suit suit) {
         this.suit = suit;
     }
     
+    /**
+     * Returns the Suit of this FoundationPile
+     * @return  suits
+     */
     public Card.Suit getSuit() {
         return suit;
     }

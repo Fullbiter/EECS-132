@@ -1,5 +1,5 @@
 /**
- * [description placeholder]
+ * Play the game of Solitaire
  *
  * @author   Kevin Nash (kjn33)
  * @version  2015.4.25
@@ -82,11 +82,11 @@ public class Solitaire {
      */
     public void playGame() {
         Scanner scan = new Scanner(System.in);
-        String input = new String();
+        System.out.print(this.toString());
+        String input = scan.nextLine();
+        input = input.toLowerCase();
         // run until a quit command is entered
         while (!(input.charAt(0) == 'q')) {
-            System.out.print(this.toString());
-            input = scan.nextLine();
             input = input.toLowerCase();
             // stock to tableau
             if (input.equals("s t"))
@@ -97,15 +97,18 @@ public class Solitaire {
                 else if (input.charAt(2) == 'f')
                     movePileToFoundation(tableau);
                 else
-                    moveTableauToActive(piles.get(Character.getNumericValue(input.charAt(2))));
+                    moveTableauToActive(piles.get(piles.size() - Character.getNumericValue(input.charAt(2))));
             }
             else if (input.charAt(0) != 'q' && input.length() > 2) {
                 if (input.charAt(2) == 'f')
-                    movePileToFoundation(piles.get(Character.getNumericValue(input.charAt(0))));
+                    movePileToFoundation(piles.get(piles.size() - Character.getNumericValue(input.charAt(0))));
                 else
-                    moveActiveToActive(piles.get(Character.getNumericValue(input.charAt(0))),
-                                       piles.get(Character.getNumericValue(input.charAt(2))));
+                    moveActiveToActive(piles.get(piles.size() - Character.getNumericValue(input.charAt(0))),
+                                       piles.get(piles.size() - Character.getNumericValue(input.charAt(2))));
             }
+            System.out.print(this.toString());
+            input = scan.nextLine();
+            input = input.toLowerCase();
         }
     }
     
@@ -138,15 +141,17 @@ public class Solitaire {
     }
     
     /**
-     * Moves all tableau Cards to the stock
+     * Moves all tableau Cards to the stock if stock is empty
      */
     public void moveTableauToStock() {
-        // iterate over each Card in the tableau
-        for (Card card : tableau) {
-            card.setIsFaceUp(false);
-            stock.insertCard(card);
+        if (stock.size() == 0) {
+            // iterate over each Card in the tableau
+            for (Card card : tableau) {
+                card.setIsFaceUp(false);
+                stock.insertCard(card);
+            }
+            tableau.clear();
         }
-        tableau.clear();
     }
     
     /**

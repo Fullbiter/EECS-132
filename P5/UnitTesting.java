@@ -28,6 +28,7 @@ public class UnitTesting {
                                     "8S", "8H", "8D", "8C", "9S", "9H", "9D", "9C", "10S", "10H", "10D", "10C", "JS",
                                     "JH", "JD", "JC", "QS", "QH", "QD", "QC", "KS", "KH", "KD", "KC"};
         int index = 0;
+        // Iterate though each Suit for each Face
         for (Card.Face face : allFaces) {
             for (Card.Suit suit : allSuits)
                 testStrings[index++] = new Card(face, suit).toString();
@@ -40,6 +41,7 @@ public class UnitTesting {
                                        "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX",
                                        "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX", "XX"};
         index = 0;
+        // Iterate though each Suit for each Face
         for (Card.Face face : allFaces) {
             for (Card.Suit suit : allSuits)
                 testStrings[index++] = new Card(face, suit, false).toString();
